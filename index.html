@@ -1,19 +1,850 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+<html lang="en-US">
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <link rel="stylesheet" href="src/css/bootstrap.min.css">
+  <link rel="stylesheet" href="src/css/multiselect.css">
+  <link rel="stylesheet" href="src/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" />
+
+  <title>Medicines</title>
+</head>
+
+<body>
+    
+  <div class="sidebar-overlay">
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <p>Navigation</p>
+      <button class="btn close-sidebar" id="close-sidebar">
+        <svg height="16px" viewBox="0 0 329.26933 329" width="16px" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0" />
+        </svg>
+      </button>
+    </div>
+    <div class="sidebar-content">
+      <div class="divider">
+        PAGES
+      </div>
+      <ul>
+        <li id="medicines_nav">
+          <svg focusable="false" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+            <path
+              d="M22,14a7.94,7.94,0,0,0-4,1.0825V9A7,7,0,0,0,4,9V23a6.9857,6.9857,0,0,0,12.2756,4.5768A7.9966,7.9966,0,1,0,22,14ZM11,4a5.0059,5.0059,0,0,1,5,5v6H6V9A5.0059,5.0059,0,0,1,11,4Zm0,24a5.0059,5.0059,0,0,1-5-5V17h9.765a7.9564,7.9564,0,0,0-.7239,8.9319A5.0147,5.0147,0,0,1,11,28Zm11,0a6,6,0,1,1,6-6A6.0066,6.0066,0,0,1,22,28Z">
+            </path>
+            <polygon points="25 21 23 21 23 19 21 19 21 21 19 21 19 23 21 23 21 25 23 25 23 23 25 23 25 21"></polygon>
+            <title>Pills add</title>
+          </svg>
+          Medicines
+        </li>
+        <li id="cases_nav">
+          <svg focusable="false" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="14" height="2" x="16" y="20"></rect>
+            <rect width="14" height="2" x="16" y="24"></rect>
+            <rect width="7" height="2" x="16" y="28"></rect>
+            <path
+              d="M14,26H4V6h7.17l3.42,3.41.58.59H28v8h2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H14Z">
+            </path>
+            <title>Folder details</title>
+          </svg>
+          Cases
+        </li>
+      </ul>
+      <div class="divider">
+        MANAGE
+      </div>
+      <ul>
+        <li id="dd_elems_nav">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M26,6V2H2V12h9V30H30V6ZM4,10V4H24V6H11v4ZM28,28H13V8H28Z"></path>
+            <rect width="2" height="2" x="15" y="11"></rect>
+            <rect width="7" height="2" x="19" y="11"></rect>
+            <rect width="2" height="2" x="15" y="17"></rect>
+            <rect width="7" height="2" x="19" y="17"></rect>
+            <rect width="2" height="2" x="15" y="23"></rect>
+            <rect width="7" height="2" x="19" y="23"></rect>
+            <title>List dropdown</title>
+          </svg>
+          Dropdown Elements
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" class="toast" id="deleteToast"
+    data-autohide="true">
+    <div class="toast-header">
+      <svg focusable="false" fill="#007bff" class="rounded mr-2" preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"
+        style="will-change: transform;">
+        <rect width="2" height="12" x="12" y="12"></rect>
+        <rect width="2" height="12" x="18" y="12"></rect>
+        <path d="M4,6V8H6V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V8h2V6ZM8,28V8H24V28Z"></path>
+        <rect width="8" height="2" x="12" y="2"></rect>
+        <title>Trash can</title>
+      </svg>
+      <strong class="mr-auto">Success!</strong>
+      <small>Just now</small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body" id="toastText"></div>
+  </div>
+
+  <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Medicine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Sure to delete the medicine?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+
+    <div class="modal fade " id="exampleModal" tabindex="-1">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add medicine</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="typeSelect">Type</label>
+              <select class="form-control" id="typeSelect">
+                <option value="default">Choose Types</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nameInput">Name</label>
+              <input type="text" class="form-control" id="nameInput">
+            </div>
+            <div class="form-group">
+              <label for="manufacturerInput">Manufacturer</label>
+              <input type="text" class="form-control" id="manufacturerInput">
+            </div>
+            <div class="form-group">
+              <label for="compInput">Composition</label>
+              <input type="text" class="form-control" id="compInput">
+            </div>
+            <div class="form-group">
+              <label for="doseInput">Dose</label>
+              <input type="text" class="form-control" id="doseInput">
+            </div>
+            <div class="form-group">
+              <label for="routeInput">Route</label>
+              <select class="form-control" id="routeInput">
+                <option value="default">Choose Route</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="frequencyInput">Frequency</label>
+              <input type="text" class="form-control" id="frequencyInput">
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-7">
+                  <label for="instructionInput">Instruction</label>
+                  <select class="form-control" id="instructionInput">
+                    <option value="default">Choose Instructions</option>
+                  </select>
+                </div>
+                <div class="col-md-5">
+                  <label for="instructionExtraInput">More instructions</label>
+                  <input type="text" class="form-control" id="instructionExtraInput">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="classInput">Class</label>
+              <input type="text" class="form-control" id="classInput">
+            </div>
+            <div class="form-group">
+              <label for="useInput">Use</label>
+              <input type="text" class="form-control" id="useInput">
+            </div>
+            <div class="form-group">
+              <label for="sideEffect">Side effect</label>
+              <input type="text" class="form-control" id="sideEffect">
+            </div>
+            <div class="form-group">
+              <label for="shopsInput">Shops</label>
+              <input type="text" class="form-control" id="shopsInput">
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="priceInput">Price (Rs.)</label>
+                  <input type="number" class="form-control" id="priceInput">
+                </div>
+                <div class="col-md-4">
+                  <label for="unitInput">Per</label>
+                  <select class="form-control" id="unitInput">
+                    <option value="default">Choose unit</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label for="ofInput">Of (Quantity)</label>
+                  <input type="text" class="form-control" id="ofInput">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="save-med-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade " id="editModal" tabindex="-1">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit medicine</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="typeSelectEdit">Type</label>
+              <select class="form-control" id="typeSelectEdit">
+                <option value="default">Choose Types</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nameInputEdit">Name</label>
+              <input type="text" class="form-control" id="nameInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="manufacturerInputEdit">Manufacturer</label>
+              <input type="text" class="form-control" id="manufacturerInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="compInputEdit">Composition</label>
+              <input type="text" class="form-control" id="compInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="doseInputEdit">Dose</label>
+              <input type="text" class="form-control" id="doseInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="routeInputEdit">Route</label>
+              <select class="form-control" id="routeInputEdit">
+                <option value="default">Choose Route</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="frequencyInputEdit">Frequency</label>
+              <input type="text" class="form-control" id="frequencyInputEdit">
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-7">
+                  <label for="instructionInputEdit">Instruction</label>
+                  <select class="form-control" id="instructionInputEdit">
+                    <option value="default"">Choose Instructions</option>
+                  </select>
+                </div>
+                <div class="col-md-5">
+                  <label for="instructionExtraInputEdit">More instructions</label>
+                  <input type="text" class="form-control" id="instructionExtraInputEdit">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="classInputEdit">Class</label>
+              <input type="text" class="form-control" id="classInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="useInputEdit">Use</label>
+              <input type="text" class="form-control" id="useInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="sideEffectEdit">Side effect</label>
+              <input type="text" class="form-control" id="sideEffectEdit">
+            </div>
+            <div class="form-group">
+              <label for="shopsInputEdit">Shops</label>
+              <input type="text" class="form-control" id="shopsInputEdit">
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="priceInputEdit">Price (Rs.)</label>
+                  <input type="number" class="form-control" id="priceInputEdit">
+                </div>
+                <div class="col-md-4">
+                  <label for="unitInputEdit">Per</label>
+                  <select class="form-control" id="unitInputEdit">
+                    <option value="default">Choose unit</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label for="ofInputEdit">Of (Quantity)</label>
+                  <input type="text" class="form-control" id="ofInputEdit">
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="medIdInput">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="update-med-btn" data-dismiss="modal" class="btn btn-primary">Save
+              Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="medicines_container">
+      <div class="col-lg-12">
+        <header>
+          <button class="nav-toggle">
+            MENU &#8594;
+          </button>
+          <h2 id="doc_title">Medicines</h2>
+          <button type="button" class="add-button btn btn-sm btn-success" data-toggle="modal"
+            data-target="#exampleModal">Add new <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg" fill="#fff" width="12" height="12" viewBox="0 0 32 32"
+              aria-hidden="true" style="will-change: transform;">
+              <path
+                d="M16,2C8.4,2,2,8.4,2,16s6.4,14,14,14s14-6.4,14-14S23.6,2,16,2z M24,17h-7v7h-2v-7H8v-2h7V8h2v7h7V17z">
+              </path>
+              <path fill="none" d="M24 17L17 17 17 24 15 24 15 17 8 17 8 15 15 15 15 8 17 8 17 15 24 15z"
+                data-icon-path="inner-path"></path>
+              <title>Add filled</title>
+            </svg></button>
+          <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+        </header>
+        <div class="tableWrapper">
+          <table id="medicine-table" aria-describedby="test"
+            class="mdl-data-table table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th id="slno">Sl. No.</th>
+                <th id="type">Type</th>
+                <th id="name">Name</th>
+                <th id="manufacturer">Manufacturer</th>
+                <th id="compostion">Composition</th>
+                <th id="dose">Dose</th>
+                <th id="route">Route</th>
+                <th id="frequency">Frequency</th>
+                <th id="instructions">Instructions</th>
+                <th id="class">Class</th>
+                <th id="use">Use</th>
+                <th id="sideeffects">Side effects</th>
+                <th id="shops">Shops</th>
+                <th id="price">Price</th>
+                <th id="actions">Actions</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" id="dd_manage">
+      <div class="col-lg-12">
+        <header>
+          <button class="nav-toggle">
+            MENU &#8594;
+          </button>
+          <h2 id="doc_title">Manage dropdown elements</h2>
+          <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+        </header>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h4>Add emelents</h4>
+
+                <label for="addtype">Type name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addtype">
+                  <button id="addTypeBtn" class="btn btn-primary manage-add-btn">
+                    Add type
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                  </button>
+                </div>
+
+                <label for="addRoute">Route name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addRoute">
+                  <button class="btn btn-primary manage-add-btn" id="addRouteBtn">
+                    Add route
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                  </button>
+                </div>
+
+                <label for="addInstruction">Instruction name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addInstruction">
+                  <button class="btn btn-primary manage-add-btn" id="addInstructionBtn">
+                    Add instruction
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                  </button>
+                </div>
+
+                <label for="addPer">Per name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addPer">
+                  <button class="btn btn-primary manage-add-btn" id="addPerBtn">
+                    Add per
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+                <label for="addChiefComplain">Chief Complain name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addChiefComplain">
+                  <button class="btn btn-primary manage-add-btn" id="addChiefComplainBtn">
+                    Add chief Complain
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h4>Delete elements</h4>
+
+                <label for="delTypeSelect">Type</label>
+                <div class="form-group">
+                  <select class="form-control" id="delTypeSelect">
+                    <option value="default">Choose Types</option>
+                  </select>
+                  <button class="btn btn-danger manage-add-btn" id="deleteTypeBtn">
+                    Delete type
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  </button>
+                </div>
+
+                <label for="delRouteSelect">Route</label>
+                <div class="form-group">
+                  <select class="form-control" id="delRouteSelect">
+                    <option value="default">Choose Routes</option>
+                  </select>
+                  <button class="btn btn-danger manage-add-btn" id="deleteRouteBtn">
+                    Delete route
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  </button>
+                </div>
+
+                <label for="delInstructionSelect">Instruction</label>
+                <div class="form-group">
+                  <select class="form-control" id="delInstructionSelect">
+                    <option value="default">Choose Instruction</option>
+                  </select>
+                  <button class="btn btn-danger manage-add-btn" id="deleteInstructionBtn">
+                    Delete Instruction
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  </button>
+                </div>
+
+                <label for="delPerSelect">Per</label>
+                <div class="form-group">
+                  <select class="form-control" id="delPerSelect">
+                    <option value="default">Choose Per</option>
+                  </select>
+                  <button class="btn btn-danger manage-add-btn" id="deletePerBtn">
+                    Delete Per
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  </button>
+                </div>
+
+                <label for="delChiefComplainSelect">Chief Complain</label>
+                <div class="form-group">
+                  <select class="form-control" id="delChiefComplainSelect">
+                    <option value="default">Choose Chief Complain</option>
+                  </select>
+                  <button class="btn btn-danger manage-add-btn" id="deleteChiefComplainBtn">
+                    Delete Chief Complain
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="cases_container">
+
+      <div class="modal fade " id="casesAddModal" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add case</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="caseNameInput">Case name</label>
+                <input type="text" class="form-control" id="caseNameInput" />
+              </div>
+              <div class="form-group">
+                <label for="dateInput">Date</label>
+                <input type="date" class="form-control" id="dateInput" />
+              </div>
+              <div class="form-group">
+                <label for="ageInput">Age</label>
+                <select class="form-control" id="ageInput">
+                  <option value="default"">Choose Age</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="genderInput">Gender</label>
+                <select class="form-control" id="genderInput">
+                  <option value="default"">Choose gender</option>
+                  <option value="male"">Male</option>
+                  <option value="female"">Female</option>
+                  <option value="other"">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bpInput">Blood pressure</label>
+                <input type="text" class="form-control" id="bpInput" />
+              </div>
+              <div class="form-group">
+                <label for="pulseInput">Pulse</label>
+                <input type="text" class="form-control" id="pulseInput" />
+              </div>
+              <div class="form-group">
+                <label for="temperatureInput">Temperature</label>
+                <input type="text" class="form-control" id="temperatureInput" />
+              </div>
+              <div class="form-group">
+                <label for="spo2Input">Spo2</label>
+                <input type="text" class="form-control" id="spo2Input" />
+              </div>
+              <div class="form-group">
+                <label for="chiefComplainInput">Chief complain</label>
+                <select class="form-control" id="chiefComplainInput" multiple>
+                  <option>hello</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="historyInput">History</label>
+                <textarea class="form-control" id="historyInput"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="medicationInput">Medication</label>
+                <textarea class="form-control" id="medicationInput"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="testCaseInput">Test</label>
+                <select class="form-control" id="testCaseInput" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="adviceInput">Advice</label>
+                <select class="form-control" id="adviceInput" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reviewInput">Review</label>
+                <select class="form-control" id="reviewInput" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="noteInput">Note</label>
+                <textarea class="form-control" id="noteInput"></textarea>
+              </div>
+              <input type="hidden" id="caseIdInput">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" id="save-case-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+              <button type="button" id="update-case-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <header>
+          <button class="nav-toggle">
+            MENU &#8594;
+          </button>
+          <h2 id="doc_title">Cases</h2>
+          <button type="button" class="add-button btn btn-sm btn-success" data-toggle="modal"
+            data-target="#casesAddModal">Add new <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg" fill="#fff" width="12" height="12" viewBox="0 0 32 32"
+              aria-hidden="true" style="will-change: transform;">
+              <path
+                d="M16,2C8.4,2,2,8.4,2,16s6.4,14,14,14s14-6.4,14-14S23.6,2,16,2z M24,17h-7v7h-2v-7H8v-2h7V8h2v7h7V17z">
+              </path>
+              <path fill="none" d="M24 17L17 17 17 24 15 24 15 17 8 17 8 15 15 15 15 8 17 8 17 15 24 15z"
+                data-icon-path="inner-path"></path>
+              <title>Add filled</title>
+            </svg></button>
+          <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+        </header>
+        <div class="tableWrapper">
+          <table id="cases-table" aria-describedby="test"
+            class="mdl-data-table table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th id="slno">Sl. No.</th>
+                <th id="case">Case</th>
+                <th id="actions">Actions</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- You can also require other files to run in this process -->
+  <script>
+    window.$ = window.jQuery = require("./src/js/jquery.min.js");
+  </script>
+  <script src="src/js/jquery.min.js"></script>
+  <script src="src/js/multiselect.js"></script>
+  <script src="src/js/index.js"></script>
+  <script src="src/js/popper.min.js"></script>
+  <script src="src/js/bootstrap.min.js"></script>
+  <script src="src/js/test.js"></script>
+  <script type="text/javascript" src="src/js/dataTable.js"></script>
+  <script type="text/javascript" src="src/js/dataTable.bootstrap.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+
+
+  <script>
+
+    function fillAgeDropdown(){
+      var select = $("#ageInput");
+      for (i=1;i<=100;i++){
+          select.append($('<option></option>').val(i).html(i+' year'))
+      }
+    }
+
+    $( "#chiefComplainInput" ).on('updateData', function(e){
+      console.log($('#chiefComplainInput').siblings())
+      // let multiselect = $('#chiefComplainInput').siblings()[1]
+      // multiselect.remove()
+      $(function () {
+        // console.log("we are here")
+        $('#chiefComplainInput').multiSelect();
+    });
+    })
+
+    $(document).ready(function () {
+      $('#chiefComplainInput').multiSelect();
+      $('#testCaseInput').multiSelect();
+      $('#adviceInput').multiSelect();
+      $('#reviewInput').multiSelect();
+      fillAgeDropdown()
+      let csv_btn = document.getElementsByClassName('buttons-csv')
+      csv_btn[0].classList.add('btn')
+      csv_btn[0].classList.add('btn-outline-secondary')
+      csv_btn[0].classList.add('btn-sm')
+    })
+
+    $('.container').on('click', '.nav-toggle', function (e) {
+      $(".sidebar-overlay").show()
+      $(".sidebar").css('left', "0")
+    })
+
+    $("#close-sidebar").click(function () {
+      $(".sidebar-overlay").hide()
+      $(".sidebar").css('left', "-22rem")
+    })
+
+    $(".sidebar-overlay").click(function () {
+      $(".sidebar-overlay").hide()
+      $(".sidebar").css('left', "-22rem")
+    })
+
+    $('#dd_elems_nav').click(function () {
+      $(document).attr("title", "Manage Dropdowns");
+      $('#doc_title').html('Manage Dropdowns')
+
+      $('#dd_manage').show()
+      $(".sidebar").css('left', "-22rem")
+
+      $(".sidebar-overlay").hide()
+      $('#cases_container').hide()
+      $('#medicines_container').hide();
+    })
+
+    $('#medicines_nav').click(function () {
+      $(document).attr("title", "Medicines");
+      $('#doc_title').html('Medicines')
+
+      $(".sidebar").css('left', "-22rem")
+      $(".sidebar-overlay").hide()
+
+      $('#dd_manage').hide()
+      $('#cases_container').hide()
+      $('#medicines_container').show();
+    })
+
+    $('#cases_nav').click(function () {
+      $(document).attr("title", "Cases");
+      $('#doc_title').html('Medicines')
+
+      $(".sidebar").css('left', "-22rem")
+      $(".sidebar-overlay").hide()
+
+      $('#dd_manage').hide()
+      $('#cases_container').show()
+      $('#medicines_container').hide();
+    })
+
+    function showSETooltip(i) {
+      let tooltip = document.getElementById('sideEffectTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#sideEffectTd' + i).position()
+      let tdScroll = $('#sideEffectTd' + i).scrollTop()
+      let tooltipHeight = $('#sideEffectTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+    function hideSETooltip(i) {
+      let tooltip = document.getElementById('sideEffectTooltip' + i)
+      tooltip.style.display = "none"
+    }
+    function showUseTooltip(i) {
+      let tooltip = document.getElementById('useTooltip' + i)
+      tooltip.style.display = "block"
+
+      let tdPosition = $('#useEffectTd' + i).position()
+      let tdScroll = $('#useEffectTd' + i).scrollTop()
+      let tooltipHeight = $('#useTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+    function hideUseTooltip(i) {
+      let tooltip = document.getElementById('useTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function hideCompTooltip(i) {
+      let tooltip = document.getElementById('compTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function hideInstTooltip(i) {
+      let tooltip = document.getElementById('instTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function hideClassTooltip(i) {
+      let tooltip = document.getElementById('classTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function showCompTooltip(i) {
+      let tooltip = document.getElementById('compTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#compTd' + i).position()
+      let tdScroll = $('#compTd' + i).scrollTop()
+      let tooltipHeight = $('#compTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+
+    function showInstTooltip(i) {
+      let tooltip = document.getElementById('instTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#instTd' + i).position()
+      let tdScroll = $('#instTd' + i).scrollTop()
+      let tooltipHeight = $('#instTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+
+    function showClassTooltip(i) {
+      let tooltip = document.getElementById('classTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#classTd' + i).position()
+      let tdScroll = $('#classTd' + i).scrollTop()
+      let tooltipHeight = $('#classTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+
+  </script>
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</body>
+
 </html>

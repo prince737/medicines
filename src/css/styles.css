@@ -1,0 +1,258 @@
+header{
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+body{
+    font-size: 12px;
+}
+
+#dd_manage{
+    display: block;
+}
+
+#medicines_container{
+    display: none;
+}
+
+#cases_container{
+    display: none;
+}
+
+#dd_manage .form-group{
+    display: flex;
+}
+
+.manage-add-btn{
+    white-space: nowrap;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.manage-add-btn svg{
+    margin-left: .5rem;
+}
+
+.container{
+    padding: unset;
+    margin: unset;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 2rem;
+}
+
+header h2{
+    margin: 0;
+}
+
+#medicine-table tr td{
+    white-space: nowrap;
+}
+
+.sidebar-overlay{
+    width: 100%;
+    height: 100vh;
+    display:none;
+    position: absolute;
+    z-index: 900;
+}
+
+.nav-toggle{
+    border-radius: 3px;
+    margin-right: 1rem;
+    font-size: .825rem;
+}
+
+.sidebar{
+    position: absolute;
+    top: 0;
+    left: -22rem;
+    height: 100vh;
+    background: #455060;
+    width: 22rem;
+    z-index: 9999;
+    box-shadow: 4px -1px 7px -1px hsla(0,0%,9%, .1);
+    transition: all .35s ease-in-out;
+}
+
+.sidebar-header{
+    display: flex;
+    background: #367fa8;
+    padding: 1rem 2rem;
+    align-items: center;
+}
+
+.sidebar-header p{
+    margin: 0;
+    font-size: 1.5rem;
+    color: #f7f7f7;
+    font-weight: 300;
+}
+
+.close-sidebar{
+    margin-left: auto;
+    border-radius: 0;
+    padding-bottom: .625rem;
+}
+
+.close-sidebar svg{
+    fill: #f7f7f7;
+}
+
+.close-sidebar:hover{
+    background: #1570a2;
+}
+
+.sidebar .sidebar-content .divider{
+    padding: 1rem 2rem;
+    color: #a1afbd;
+    position: relative;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.sidebar .sidebar-content .divider:after{
+    content: "";
+    width: 100%;
+    position: absolute;
+    border-top: 1px dashed #a1afbd;
+    top: 50%;
+    margin-left: 1.5rem;
+}
+
+.sidebar .sidebar-content ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar .sidebar-content ul li{
+    padding: 1.5rem 2rem;
+    font-size: 1rem;
+    color: #f7f7f7;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar .sidebar-content ul li svg{
+    fill: #f7f7f7;
+    height: 1.5em;
+    width: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.sidebar .sidebar-content ul li:hover{
+    background: #22272f;
+}
+
+/* #sideEffectTd:hover + #sideEffectTooltip{
+    display: block;
+    width: 20rem;
+} */
+
+.signature{
+    margin-left: auto;
+}
+
+.signature span{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.sideEffectTd{
+    position: relative;
+}
+
+.sideEffectTooltip{
+    display:none;
+    position:absolute;
+    background: #212121;
+    color: #fff;
+    white-space: pre-wrap;
+    padding: .75rem;
+    opacity: .9;
+    z-index: 999;
+    border-radius: 3px;
+    margin-top: 1rem;
+    min-width: 15rem;
+    max-width: 15rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    pointer-events: none;
+}
+
+#medicine-table_length, .dt-buttons{
+    float: left;
+}
+
+.dt-buttons{
+    margin-left: 2rem;
+}
+
+.sideEffectTooltipTop{
+    display:none;
+    position:absolute;
+    background: #212121;
+    color: #fff;
+    white-space: pre-wrap;
+    padding: .75rem;
+    opacity: .9;
+    z-index: 999;
+    border-radius: 3px;
+    margin-top: 1rem;
+    min-width: 15rem;
+    max-width: 15rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    pointer-events: none;
+}
+
+.sideEffectTooltip:before{
+    content: "";
+    height: 1rem;
+    width: .7rem;
+    background-color: #212121;
+    position: absolute;
+    top:-.4rem;
+    left: 1rem;
+    transform: rotate(45deg);
+}
+
+.sideEffectTooltipTop:before{
+    content: "";
+    height: 1rem;
+    width: 1rem;
+    background-color: #212121;
+    position: absolute;
+    bottom:-.4rem;
+    left: 1rem;
+    transform: rotate(45deg);
+}
+
+.add-button{
+    /* background: none;
+    border: none;
+    outline:none; */
+    height: 2rem;
+    margin-left: 1rem;
+    padding: 0;
+    line-height: .875rem;
+    padding:.5rem;
+}
+
+#save-error{
+    display: none;
+}
+
+#deleteToast{
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    min-width: 18rem;
+    z-index: 9999;
+}
