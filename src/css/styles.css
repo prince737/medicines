@@ -20,18 +20,40 @@ body{
     display: none;
 }
 
+#dd_edit{
+    display: none;
+}
+
 #dd_manage .form-group{
     display: flex;
 }
 
+#dd_edit .form-group{
+    display: flex;
+}
+
+.editButtonContainer{
+    display: flex;
+}
+
+
 .manage-add-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    align-self: flex-end;
+}
+
+.dd-add-btn{
     white-space: nowrap;
     margin-left: 1rem;
     display: flex;
     align-items: center;
 }
 
-.manage-add-btn svg{
+.manage-add-btn svg, .dd-add-btn svg{
     margin-left: .5rem;
 }
 

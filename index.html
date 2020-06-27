@@ -73,7 +73,11 @@
             <rect width="7" height="2" x="19" y="23"></rect>
             <title>List dropdown</title>
           </svg>
-          Dropdown Elements
+          Add Dropdown Elements
+        </li>
+        <li id="dd_elems_edit_nav">
+          <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M22,22v6H6V4H16V2H6A2,2,0,0,0,4,4V28a2,2,0,0,0,2,2H22a2,2,0,0,0,2-2V22Z"></path><path d="M29.54,5.76l-3.3-3.3a1.6,1.6,0,0,0-2.24,0l-14,14V22h5.53l14-14a1.6,1.6,0,0,0,0-2.24ZM14.7,20H12V17.3l9.44-9.45,2.71,2.71ZM25.56,9.15,22.85,6.44l2.27-2.27,2.71,2.71Z"></path><title>Request quote</title></svg>
+          Edit Dropdown Elements
         </li>
       </ul>
     </div>
@@ -380,7 +384,7 @@
           <button class="nav-toggle">
             MENU &#8594;
           </button>
-          <h2 id="doc_title">Manage dropdown elements</h2>
+          <h2 id="doc_title">Add dropdown elements</h2>
           <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
         </header>
 
@@ -388,12 +392,12 @@
           <div class="col-lg-6">
             <div class="card">
               <div class="card-body">
-                <h4>Add emelents</h4>
+                <h5 style="margin-bottom: 2rem">Medicine Dropdown Elements</h5>
 
                 <label for="addtype">Type name</label>
                 <div class="form-group">
                   <input type="text" class="form-control" id="addtype">
-                  <button id="addTypeBtn" class="btn btn-primary manage-add-btn">
+                  <button id="addTypeBtn" class="btn btn-primary dd-add-btn">
                     Add type
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                   </button>
@@ -402,7 +406,7 @@
                 <label for="addRoute">Route name</label>
                 <div class="form-group">
                   <input type="text" class="form-control" id="addRoute">
-                  <button class="btn btn-primary manage-add-btn" id="addRouteBtn">
+                  <button class="btn btn-primary dd-add-btn" id="addRouteBtn">
                     Add route
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                   </button>
@@ -411,7 +415,7 @@
                 <label for="addInstruction">Instruction name</label>
                 <div class="form-group">
                   <input type="text" class="form-control" id="addInstruction">
-                  <button class="btn btn-primary manage-add-btn" id="addInstructionBtn">
+                  <button class="btn btn-primary dd-add-btn" id="addInstructionBtn">
                     Add instruction
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                   </button>
@@ -420,18 +424,8 @@
                 <label for="addPer">Per name</label>
                 <div class="form-group">
                   <input type="text" class="form-control" id="addPer">
-                  <button class="btn btn-primary manage-add-btn" id="addPerBtn">
+                  <button class="btn btn-primary dd-add-btn" id="addPerBtn">
                     Add per
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
-                    </svg>
-                  </button>
-                </div>
-
-                <label for="addChiefComplain">Chief Complain name</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" id="addChiefComplain">
-                  <button class="btn btn-primary manage-add-btn" id="addChiefComplainBtn">
-                    Add chief Complain
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                     </svg>
                   </button>
@@ -440,67 +434,156 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-6">
             <div class="card">
               <div class="card-body">
-                <h4>Delete elements</h4>
+                <h5 style="margin-bottom: 2rem">Case Dropdown Elements</h5>
 
-                <label for="delTypeSelect">Type</label>
+                <label for="addChiefComplain">Chief Complain name</label>
                 <div class="form-group">
-                  <select class="form-control" id="delTypeSelect">
-                    <option value="default">Choose Types</option>
-                  </select>
-                  <button class="btn btn-danger manage-add-btn" id="deleteTypeBtn">
-                    Delete type
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
-                  </button>
-                </div>
-
-                <label for="delRouteSelect">Route</label>
-                <div class="form-group">
-                  <select class="form-control" id="delRouteSelect">
-                    <option value="default">Choose Routes</option>
-                  </select>
-                  <button class="btn btn-danger manage-add-btn" id="deleteRouteBtn">
-                    Delete route
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
-                  </button>
-                </div>
-
-                <label for="delInstructionSelect">Instruction</label>
-                <div class="form-group">
-                  <select class="form-control" id="delInstructionSelect">
-                    <option value="default">Choose Instruction</option>
-                  </select>
-                  <button class="btn btn-danger manage-add-btn" id="deleteInstructionBtn">
-                    Delete Instruction
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
-                  </button>
-                </div>
-
-                <label for="delPerSelect">Per</label>
-                <div class="form-group">
-                  <select class="form-control" id="delPerSelect">
-                    <option value="default">Choose Per</option>
-                  </select>
-                  <button class="btn btn-danger manage-add-btn" id="deletePerBtn">
-                    Delete Per
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
-                  </button>
-                </div>
-
-                <label for="delChiefComplainSelect">Chief Complain</label>
-                <div class="form-group">
-                  <select class="form-control" id="delChiefComplainSelect">
-                    <option value="default">Choose Chief Complain</option>
-                  </select>
-                  <button class="btn btn-danger manage-add-btn" id="deleteChiefComplainBtn">
-                    Delete Chief Complain
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 12H14V24H12zM18 12H20V24H18z"></path><path d="M4 6V8H6V28a2 2 0 002 2H24a2 2 0 002-2V8h2V6zM8 28V8H24V28zM12 2H20V4H12z"></path><title>Trash can</title></svg>
+                  <input type="text" class="form-control" id="addChiefComplain">
+                  <button class="btn btn-primary dd-add-btn" id="addChiefComplainBtn">
+                    Add chief Complain
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
                   </button>
                 </div>
               </div>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="dd_edit">
+      <header>
+        <button class="nav-toggle">
+          MENU &#8594;
+        </button>
+        <h2 id="doc_title">Edit dropdown elements</h2>
+        <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+      </header>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4>Medicine elements</h4>
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editTypeSelect">Type</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editTypeSelect">
+                      <option value="default">Choose Types</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editTypeDD">New type name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editTypeDD">
+                  </div>
+                </div>
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editTypeBtn" class="btn btn-primary manage-add-btn">
+                    Edit type
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>  
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editRouteSelect">Route</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editRouteSelect">
+                      <option value="default">Choose Routes</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <label for="editRouteDD">New route name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editRouteDD">
+                  </div>
+                </div>
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editRouteBtn" class="btn btn-primary manage-add-btn">
+                    Edit Route
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editInstructionSelect">Instruction</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editInstructionSelect">
+                      <option value="default">Choose Instruction</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <label for="editInstructionDD">New instruction name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editInstructionDD">
+                  </div>
+                </div>
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editInstructionBtn" class="btn btn-primary manage-add-btn">
+                    Edit Instruction
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editPerSelect">Per</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editPerSelect">
+                      <option value="default">Choose Per</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editPerDD">New per name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editPerDD">
+                  </div>
+                </div>
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editPerBtn" class="btn btn-primary manage-add-btn">
+                    Edit Per
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>  
+              
+              <h4 style="margin: 1rem 0;">Cases elements</h4>
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editChiefComplainSelect">Chief Complain</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editChiefComplainSelect">
+                      <option value="default">Choose Chief Complain</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editChiefComplainDD">New per name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editChiefComplainDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editChiefComplainBtn" class="btn btn-primary manage-add-btn">
+                    Edit Chief Complain
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>  
             </div>
           </div>
         </div>
@@ -561,7 +644,6 @@
               <div class="form-group">
                 <label for="chiefComplainInput">Chief complain</label>
                 <select class="form-control" id="chiefComplainInput" multiple>
-                  <option>hello</option>
                 </select>
               </div>
               <div class="form-group">
@@ -591,11 +673,100 @@
                 <label for="noteInput">Note</label>
                 <textarea class="form-control" id="noteInput"></textarea>
               </div>
-              <input type="hidden" id="caseIdInput">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" id="save-case-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade " id="casesEditModal" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit case</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="caseNameInputEdit">Case name</label>
+                <input type="text" class="form-control" id="caseNameInputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="dateInputEdit">Date</label>
+                <input type="date" class="form-control" id="dateInputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="ageInputEdit">Age</label>
+                <select class="form-control" id="ageInputEdit">
+                  <option value="default"">Choose Age</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="genderInputEdit">Gender</label>
+                <select class="form-control" id="genderInputEdit">
+                  <option value="default"">Choose gender</option>
+                  <option value="male"">Male</option>
+                  <option value="female"">Female</option>
+                  <option value="other"">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bpInputEdit">Blood pressure</label>
+                <input type="text" class="form-control" id="bpInputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="pulseInputEdit">Pulse</label>
+                <input type="text" class="form-control" id="pulseInputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="temperatureInputEdit">Temperature</label>
+                <input type="text" class="form-control" id="temperatureInputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="spo2InputEdit">Spo2</label>
+                <input type="text" class="form-control" id="spo2InputEdit" />
+              </div>
+              <div class="form-group">
+                <label for="chiefComplainInputEdit">Chief complain</label>
+                <select class="form-control" id="chiefComplainInputEdit" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="historyInputEdit">History</label>
+                <textarea class="form-control" id="historyInputEdit"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="medicationInputEdit">Medication</label>
+                <textarea class="form-control" id="medicationInputEdit"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="testCaseInputEdit">Test</label>
+                <select class="form-control" id="testCaseInputEdit" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="adviceInputEdit">Advice</label>
+                <select class="form-control" id="adviceInputEdit" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reviewInputEdit">Review</label>
+                <select class="form-control" id="reviewInputEdit" multiple>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="noteInputEdit">Note</label>
+                <textarea class="form-control" id="noteInputEdit"></textarea>
+              </div>
+              <input type="hidden" id="caseIdInputEdit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" id="update-case-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
             </div>
           </div>
@@ -659,26 +830,14 @@
 
     function fillAgeDropdown(){
       var select = $("#ageInput");
+      var selectEdit = $("#ageInputEdit");
       for (i=1;i<=100;i++){
           select.append($('<option></option>').val(i).html(i+' year'))
+          selectEdit.append($('<option></option>').val(i).html(i+' year'))
       }
     }
 
-    $( "#chiefComplainInput" ).on('updateData', function(e){
-      console.log($('#chiefComplainInput').siblings())
-      // let multiselect = $('#chiefComplainInput').siblings()[1]
-      // multiselect.remove()
-      $(function () {
-        // console.log("we are here")
-        $('#chiefComplainInput').multiSelect();
-    });
-    })
-
     $(document).ready(function () {
-      $('#chiefComplainInput').multiSelect();
-      $('#testCaseInput').multiSelect();
-      $('#adviceInput').multiSelect();
-      $('#reviewInput').multiSelect();
       fillAgeDropdown()
       let csv_btn = document.getElementsByClassName('buttons-csv')
       csv_btn[0].classList.add('btn')
@@ -702,7 +861,7 @@
     })
 
     $('#dd_elems_nav').click(function () {
-      $(document).attr("title", "Manage Dropdowns");
+      $(document).attr("title", "Add Dropdown Elements");
       $('#doc_title').html('Manage Dropdowns')
 
       $('#dd_manage').show()
@@ -711,6 +870,21 @@
       $(".sidebar-overlay").hide()
       $('#cases_container').hide()
       $('#medicines_container').hide();
+      $('#dd_edit').hide();
+    })
+
+    $('#dd_elems_edit_nav').click(function () {
+      $(document).attr("title", "Edit Dropdown Elements");
+      $('#doc_title').html('Manage Dropdowns')
+
+      $('#dd_manage').show()
+      $(".sidebar").css('left', "-22rem")
+
+      $(".sidebar-overlay").hide()
+      $('#cases_container').hide()
+      $('#medicines_container').hide();
+      $('#dd_manage').hide()
+      $('#dd_edit').show();
     })
 
     $('#medicines_nav').click(function () {
@@ -723,6 +897,7 @@
       $('#dd_manage').hide()
       $('#cases_container').hide()
       $('#medicines_container').show();
+      $('#dd_edit').hide();
     })
 
     $('#cases_nav').click(function () {
@@ -735,6 +910,7 @@
       $('#dd_manage').hide()
       $('#cases_container').show()
       $('#medicines_container').hide();
+      $('#dd_edit').hide();
     })
 
     function showSETooltip(i) {

@@ -36,7 +36,7 @@ let table = $('#medicine-table').DataTable({
     }
 })
 
-function readData() {
+function readData(initial=false) {
     var dirPath = path.join(docsPath, '/medicines');
     var med = path.join(docsPath, '/medicines/medicines.json');
     var casesFile = path.join(docsPath, '/medicines/cases.json');
@@ -124,10 +124,25 @@ function readData() {
 
     $('#medicine-table').DataTable().draw(false);
 
-    readManageDropdownData()
+    if(initial){
+        readManageDropdownData()
+
+        //Initialize multi selects
+        $('#chiefComplainInput').multiSelect();
+        $('#testCaseInput').multiSelect();
+        $('#adviceInput').multiSelect();
+        $('#reviewInput').multiSelect();
+
+        $('#chiefComplainInputEdit').multiSelect();
+        $('#testCaseInputEdit').multiSelect();
+        $('#adviceInputEdit').multiSelect();
+        $('#reviewInputEdit').multiSelect();
+    }
 }
 
-$(document).ready(readData)
+$(document).ready(function(){
+    readData(true)
+})
 
 $('#medicine-table').on('page.dt', function () {
     formatSideEffects(table.page.info().page)
@@ -371,18 +386,15 @@ $('#cases_container').on('click', '.deleteCaseButton', function (e) {
         detail: "Once deleted, this action cannot be undone."
     };
     dialog.showMessageBox(null, options)
-    .then((s) => {
-        if (s.response === 0) {
-            console.log("here")
-            console.log(cases)
-            delete cases[caseId]
-            console.log(cases)
-            $('#toastText').html('<strong>' + caseToBeDeleted.case + '</strong>' + ' was successfully deleted.')
-            fs.writeFileSync(p, JSON.stringify(cases))
-            readData()
-            $('#deleteToast').toast('show')
-        }
-    })
+        .then((s) => {
+            if (s.response === 0) {
+                delete cases[caseId]
+                $('#toastText').html('<strong>' + caseToBeDeleted.case + '</strong>' + ' was successfully deleted.')
+                fs.writeFileSync(p, JSON.stringify(cases))
+                readData()
+                $('#deleteToast').toast('show')
+            }
+        })
 })
 
 
@@ -392,25 +404,33 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
     let cases = JSON.parse(fs.readFileSync(p, 'utf-8'))
     let caseToBeEdited = cases[caseId]
 
-    $('#caseNameInput').val(caseToBeEdited.case);
-    $('#dateInput').val(caseToBeEdited.date);
-    $('#ageInput').val(caseToBeEdited.age);
-    $('#genderInput').val(caseToBeEdited.gender);
-    $('#bpInput').val(caseToBeEdited.bp);
-    $('#pulseInput').val(caseToBeEdited.pulse);
-    $('#temperatureInput').val(caseToBeEdited.temperature);
-    $('#spo2Input').val(caseToBeEdited.spo2);
-    $('#chiefComplainInput').val(caseToBeEdited.chiefComplain);
-    $('#historyInput').val(caseToBeEdited.history);
-    $('#medicationInput').val(caseToBeEdited.medication);
-    $('#testCaseInput').val(caseToBeEdited.test);
-    $('#adviceInput').val(caseToBeEdited.advice);
-    $('#reviewInput').val(caseToBeEdited.review);
-    $('#noteInput').val(caseToBeEdited.note);
-    $('#caseIdInput').val(caseId);
-    $('#save-case-btn').hide();
-    $('#update-case-btn').show();
-    $('#casesAddModal').modal('show')
+    $('#caseNameInputEdit').val(caseToBeEdited.case);
+    $('#dateInputEdit').val(caseToBeEdited.date);
+    $('#ageInputEdit').val(caseToBeEdited.age);
+    $('#genderInputEdit').val(caseToBeEdited.gender);
+    $('#bpInputEdit').val(caseToBeEdited.bloodPressure);
+    $('#pulseInputEdit').val(caseToBeEdited.pulse);
+    $('#temperatureInputEdit').val(caseToBeEdited.temperature);
+    $('#spo2InputEdit').val(caseToBeEdited.spo2);
+    $('#chiefComplainInputEdit').val(caseToBeEdited.chiefComplain);
+    $('#historyInputEdit').val(caseToBeEdited.history);
+    $('#medicationInputEdit').val(caseToBeEdited.medication);
+    $('#testCaseInputEdit').val(caseToBeEdited.test);
+    $('#adviceInputEdit').val(caseToBeEdited.advice);
+    $('#reviewInputEdit').val(caseToBeEdited.review);
+    $('#noteInputEdit').val(caseToBeEdited.note);
+    $('#caseIdInputEdit').val(caseId);
+    $('#casesEditModal').modal('show')
+
+    console.log(caseToBeEdited.chiefComplain)
+
+
+    $(function () {
+        $('#chiefComplainInputEdit').multiSelect().trigger('change');
+        $('#testCaseInputEdit').multiSelect().trigger('change');
+        $('#adviceInputEdit').multiSelect().trigger('change');
+        $('#reviewInputEdit').multiSelect().trigger('change');
+    });
 })
 
 
@@ -430,8 +450,6 @@ $('#save-case-btn').click(function () {
     var advice = $('#adviceInput').val();
     var review = $('#reviewInput').val();
     var note = $('#noteInput').val();
-
-    console.log(chiefComplain)
 
     // save goes here
     var p = path.join(docsPath, '/medicines/cases.json');
@@ -466,6 +484,59 @@ $('#save-case-btn').click(function () {
     $('#casesAddModal :input').val('');
 })
 
+$('#update-case-btn').click(function () {
+    var _case = $('#caseNameInputEdit').val();
+    var date = $('#dateInputEdit').val();
+    var age = $('#ageInputEdit').val();
+    var gender = $('#genderInputEdit').val();
+    var bloodPressure = $('#bpInputEdit').val();
+    var pulse = $('#pulseInputEdit').val();
+    var temperature = $('#temperatureInputEdit').val();
+    var spo2 = $('#spo2InputEdit').val();
+    var chiefComplain = $('#chiefComplainInputEdit').val();
+    var history = $('#historyInputEdit').val();
+    var medication = $('#medicationInputEdit').val();
+    var test = $('#testCaseInputEdit').val();
+    var advice = $('#adviceInputEdit').val();
+    var review = $('#reviewInputEdit').val();
+    var note = $('#noteInputEdit').val();
+    var caseToBeEdited = $('#caseIdInputEdit').val();
+
+    // update goes here
+    var p = path.join(docsPath, '/medicines/cases.json');
+    let cases = JSON.parse(fs.readFileSync(p, 'utf-8'))
+
+    cases[caseToBeEdited] = {
+        "case": _case,
+        "date": date,
+        "age": age,
+        "gender": gender,
+        "bloodPressure": bloodPressure,
+        "pulse": pulse,
+        "temperature": temperature,
+        "spo2": spo2,
+        "chiefComplain": chiefComplain,
+        "history": history,
+        "medication": medication,
+        "test": test,
+        "advice": advice,
+        "review": review,
+        "note": note
+    }
+
+    fs.writeFileSync(p, JSON.stringify(cases))
+    readData()
+    const options = {
+        type: 'info',
+        title: 'Success',
+        message: 'Success!',
+        detail: "Case was successfully updated."
+    };
+
+    dialog.showMessageBox(null, options);
+    $('#casesEditModal :input').val('');
+})
+
 
 /*******************************************************************/
 /*********                 DROPDOWN ELEMENTS              **********/
@@ -476,7 +547,8 @@ $('#addTypeBtn').click(function () {
         name: "Type",
         inputId: "addtype",
         fileName: "types.json",
-        fileKey: "types"
+        fileKey: "types",
+        formInputId: "typeSelect"
     })
 })
 
@@ -485,7 +557,8 @@ $('#addRouteBtn').click(function () {
         name: "Route",
         inputId: "addRoute",
         fileName: "routes.json",
-        fileKey: "routes"
+        fileKey: "routes",
+        formInputId: "routeInput"
     })
 })
 
@@ -494,7 +567,8 @@ $('#addInstructionBtn').click(function () {
         name: "Instruction",
         inputId: "addInstruction",
         fileName: "instructions.json",
-        fileKey: "instructions"
+        fileKey: "instructions",
+        formInputId: "instructionInput"
     })
 })
 
@@ -503,7 +577,8 @@ $('#addPerBtn').click(function () {
         name: "Per",
         inputId: "addPer",
         fileName: "per.json",
-        fileKey: "per"
+        fileKey: "per",
+        formInputId: "unitInput"
     })
 })
 
@@ -512,89 +587,108 @@ $('#addChiefComplainBtn').click(function () {
         name: "ChiefComplain",
         inputId: "addChiefComplain",
         fileName: "chiefComplain.json",
-        fileKey: "chiefComplain"
+        fileKey: "chiefComplain",
+        formInputId: "chiefComplainInput",
+        isMultiSelect: true
     })
-    $( "#chiefComplainInput").trigger( "updateData", [ "Custom", "Event" ] );
-    // $('#chiefComplainInput').multiSelect();
 })
 
-$('#deleteTypeBtn').click(function () {
-    deleteDropDownItem({
+$('#editTypeBtn').click(function () {
+    editDropDownItem({
         name: "Type",
-        inputId: "delTypeSelect",
+        inputId: "editTypeSelect",
+        newInputId: "editTypeDD",
         fileName: "types.json",
-        fileKey: "types"
+        fileKey: "types",
+        type: "medicines",
+        formInputId: "typeSelect",
+        dataKey: 'type'
     })
 })
 
-$('#deleteRouteBtn').click(function () {
-    deleteDropDownItem({
+$('#editRouteBtn').click(function () {
+    editDropDownItem({
         name: "Route",
-        inputId: "delRouteSelect",
+        inputId: "editRouteSelect",
+        newInputId: "editRouteDD",
         fileName: "routes.json",
-        fileKey: "routes"
+        fileKey: "routes",
+        type: "medicines",
+        formInputId: "routeInput",
+        dataKey: "route"
     })
 })
 
-$('#deleteInstructionBtn').click(function () {
-    deleteDropDownItem({
+$('#editInstructionBtn').click(function () {
+    editDropDownItem({
         name: "Instruction",
-        inputId: "delInstructionSelect",
+        inputId: "editInstructionSelect",
+        newInputId: "editInstructionDD",
         fileName: "instructions.json",
-        fileKey: "instructions"
+        fileKey: "instructions",
+        type: "medicines",
+        formInputId: "instructionInput",
+        dataKey: "instructions"
     })
 })
 
-$('#deletePerBtn').click(function () {
-    deleteDropDownItem({
+$('#editPerBtn').click(function () {
+    editDropDownItem({
         name: "Per",
-        inputId: "delPerSelect",
+        inputId: "editPerSelect",
+        newInputId: "editPerDD",
         fileName: "per.json",
-        fileKey: "per"
+        fileKey: "per",
+        type: "medicines",
+        formInputId: "unitInput",
+        dataKey: "per"
     })
 })
 
-$('#deleteChiefComplainBtn').click(function () {
-    deleteDropDownItem({
+$('#editChiefComplainBtn').click(function () {
+    editDropDownItem({
         name: "Chief Complain",
-        inputId: "delChiefComplainSelect",
+        inputId: "editChiefComplainSelect",
+        newInputId: "editChiefComplainDD",
         fileName: "chiefComplain.json",
-        fileKey: "chiefComplain"
+        fileKey: "chiefComplain",
+        type: "cases",
+        dataKey: "chiefComplain",
+        formInputId: "chiefComplainInput",
+        isMultiSelect: true
     })
-    
-
 })
 
 function readManageDropdownData() {
     //TYPES MANAGE
     let types = readDataFromFile({ fileName: 'types.json', defaultData: '{"types":[]}' })
-    updateTypeDropdown(types, 'delTypeSelect', 'types')
-    updateTypeDropdown(types, 'typeSelect', 'types')
-    updateTypeDropdown(types, 'typeSelectEdit', 'types')
+    refreshDropdownData(types, 'editTypeSelect', 'types')
+    refreshDropdownData(types, 'typeSelect', 'types')
+    refreshDropdownData(types, 'typeSelectEdit', 'types')
 
     //ROUTES MANAGE
     let routes = readDataFromFile({ fileName: 'routes.json', defaultData: '{"routes":[]}' })
-    updateTypeDropdown(routes, 'delRouteSelect', "routes")
-    updateTypeDropdown(routes, 'routeInput', 'routes')
-    updateTypeDropdown(routes, 'routeInputEdit', 'routes')
+    refreshDropdownData(routes, 'editRouteSelect', "routes")
+    refreshDropdownData(routes, 'routeInput', 'routes')
+    refreshDropdownData(routes, 'routeInputEdit', 'routes')
 
     //INSTRUCTIONS MANAGE
     let instructions = readDataFromFile({ fileName: 'instructions.json', defaultData: '{"instructions":[]}' })
-    updateTypeDropdown(instructions, 'delInstructionSelect', 'instructions')
-    updateTypeDropdown(instructions, 'instructionInput', 'instructions')
-    updateTypeDropdown(instructions, 'instructionInputEdit', 'instructions')
+    refreshDropdownData(instructions, 'editInstructionSelect', 'instructions')
+    refreshDropdownData(instructions, 'instructionInput', 'instructions')
+    refreshDropdownData(instructions, 'instructionInputEdit', 'instructions')
 
     //PER MANAGE
     let per = readDataFromFile({ fileName: 'per.json', defaultData: '{"per":[]}' })
-    updateTypeDropdown(per, 'delPerSelect', 'per')
-    updateTypeDropdown(per, 'unitInput', 'per')
-    updateTypeDropdown(per, 'unitInputEdit', 'per')
+    refreshDropdownData(per, 'editPerSelect', 'per')
+    refreshDropdownData(per, 'unitInput', 'per')
+    refreshDropdownData(per, 'unitInputEdit', 'per')
 
-    //PER MANAGE
+    //CHIEF COMPLAIN MANAGE
     let chiefComplain = readDataFromFile({ fileName: 'chiefComplain.json', defaultData: '{"chiefComplain":[]}' })
-    updateTypeDropdown(chiefComplain, 'delChiefComplainSelect', 'chiefComplain')
-    updateTypeDropdown(chiefComplain, 'chiefComplainInput', 'chiefComplain')
-    // updateTypeDropdown(per, 'unitInputEdit', 'per')
+    refreshDropdownData(chiefComplain, 'editChiefComplainSelect', 'chiefComplain')
+    refreshDropdownData(chiefComplain, 'chiefComplainInput', 'chiefComplain', true)
+    refreshDropdownData(chiefComplain, 'chiefComplainInputEdit', 'chiefComplain', true)
 }
 
 function readDataFromFile(options) {
@@ -608,16 +702,19 @@ function readDataFromFile(options) {
     return JSON.parse(fs.readFileSync(p, 'utf-8'))
 }
 
-function updateTypeDropdown(data, id, key) {
+function refreshDropdownData(data, id, key, isMultiSelect = false) {
     var select = document.getElementById(id);
     select.options.length = 1;
     for (let [i, type] of data[key].entries()) {
-        select.options[select.options.length] = new Option(type, i);
+        let option = new Option(type, type)
+        select.options[select.options.length] = option;
+        option.setAttribute("id", id+"_"+i)
     }
-    $(function () {
-        console.log("we are here")
-        $('#chiefComplainInput').multiSelect();
-    });
+    if (isMultiSelect) {
+        $(function () {
+            $('#'+id).multiSelect().trigger('change');
+        });
+    }
 }
 
 function addDropDownItem(options) {
@@ -625,6 +722,8 @@ function addDropDownItem(options) {
     inputId = options.inputId
     fileName = options.fileName
     fileKey = options.fileKey
+    formInputId = options.formInputId
+    isMultiSelect = options.isMultiSelect
 
     let newVal = $('#' + inputId).val()
     if (!newVal) {
@@ -646,8 +745,12 @@ function addDropDownItem(options) {
     data[fileKey].push(newVal)
     fs.writeFileSync(p, JSON.stringify(data))
 
+    //Update dropdown data
+    refreshDropdownData(data, 'edit' + name + 'Select', fileKey)
+    refreshDropdownData(data, formInputId, fileKey, isMultiSelect)
+    refreshDropdownData(data, formInputId+"Edit", fileKey, isMultiSelect)
+    
     //Show success message
-    updateTypeDropdown(data, 'del' + name + 'Select', fileKey)
     $('#' + inputId).val('')
     const msgOptions = {
         type: 'info',
@@ -658,36 +761,75 @@ function addDropDownItem(options) {
     dialog.showMessageBox(null, msgOptions);
 }
 
-function deleteDropDownItem(options) {
-    name = options.name
-    inputId = options.inputId
-    fileName = options.fileName
-    fileKey = options.fileKey
+function editDropDownItem(options) {
+    let name = options.name
+    let inputId = options.inputId
+    let editInputId = options.newInputId
+    let fileName = options.fileName
+    let fileKey = options.fileKey
+    let type = options.type
+    let formInputId = options.formInputId
+    let isMultiSelect = options.isMultiSelect
 
-    let delId = $('#' + inputId).val()
-    let delName = $('#' + inputId + ' option:selected').text()
+    let buttonId = editInputId.substr(0, editInputId.length - 2) + "Btn"
+    let buttonContent = $('#'+buttonId).html()
 
-    if (!delId || delId === 'default') {
-        dialog.showErrorBox("Error", "Please select the '" + name + "' that is to be deleted.")
+    let editId = $('#' + inputId).val()
+    let editName = $('#' + inputId + ' option:selected').text()
+    let editedvalue = $('#' + editInputId).val()
+
+    if (!editId || editId === 'default' || !editedvalue) {
+        dialog.showErrorBox("Error", "One or more required field is empty. Choose the "+name+" to be edited and the new value of that "+name+".")
         return
     }
+
+    $('#'+buttonId).html("Please wait...")
+    $('#'+buttonId).prop('disabled', true)
 
     var p = path.join(docsPath, '/medicines/' + fileName);
     let data = JSON.parse(fs.readFileSync(p, 'utf-8'))
 
-    //Remove and write to file
-    data[fileKey].splice(delId, 1)
+    //Edit and write to file
+    let elemIndex = data[fileKey].indexOf(editName)
+    data[fileKey][elemIndex] = editedvalue
     fs.writeFileSync(p, JSON.stringify(data))
 
-    updateTypeDropdown(data, inputId, fileKey)
+    updateDropDownFieldInElements(type, options.dataKey, editName, editedvalue)
+
+    //Refresh all dropdowns
+    refreshDropdownData(data, inputId, fileKey)
+    refreshDropdownData(data, formInputId, fileKey, isMultiSelect)
+    refreshDropdownData(data, formInputId+"Edit", fileKey, isMultiSelect)
 
     //Show success message
     $('#' + inputId).val('default')
+    $('#' + editInputId).val('')
+    $('#'+buttonId).html(buttonContent)
+    $('#'+buttonId).prop("disabled", false)
     const msgOptions = {
         type: 'info',
         title: 'Success',
         message: 'Success!',
-        detail: "The " + name + " '" + delName + "' was successfully deleted."
+        detail: "The " + name + " '" + editName + "' was successfully edited."
     };
     dialog.showMessageBox(null, msgOptions);
+}
+
+function updateDropDownFieldInElements(type, dataKey, oldValue, newValue){
+    var p = path.join(docsPath, '/medicines/'+type+'.json');
+    let data = JSON.parse(fs.readFileSync(p, 'utf-8'))
+
+    for( let row in data){
+        if(Array.isArray(data[row][dataKey])){
+            for(let [i, val] of data[row][dataKey].entries()){
+                if(val == oldValue) data[row][dataKey][i] = newValue
+            }
+        }else if(data[row][dataKey] === oldValue){
+            data[row][dataKey] = newValue
+        }
+    }
+
+    fs.writeFileSync(p, JSON.stringify(data))
+
+    readData()
 }

@@ -1,5 +1,4 @@
 (function (d) {
-    console.log(">>>")
     function g(a, b) { this.b = d(a); this.a = d.extend({}, k, b); this.M() } var k = {
         containerHTML: '<div class="multi-select-container">', menuHTML: '<div class="multi-select-menu">', buttonHTML: '<span class="multi-select-button">', menuItemsHTML: '<div class="multi-select-menuitems">', menuItemHTML: '<label class="multi-select-menuitem">', presetsHTML: '<div class="multi-select-presets">', modalHTML: void 0, menuItemTitleClass: "multi-select-menuitem--titled", activeClass: "multi-select-container--open", noneText: "Choose options",
         allText: void 0, presets: void 0, positionedMenuClass: "multi-select-container--positioned", positionMenuWithin: void 0, viewportBottomGutter: 20, menuMinHeight: 200
@@ -25,6 +24,7 @@
                 e.addClass(h).attr("data-group-title", a.attr("label")); c.h.append(e)
             })
         }, o: function (a, b) {
+            if(!a[0].value)return
             var c = a[0].id + "_" + b; b = d(this.a.menuItemHTML).attr({ "for": c, role: "menuitem" }).on("keydown.multiselect", this.v.bind(this, "menuitem")).text(" " + a.text()); c = d("<input>").attr({ type: "checkbox", id: c, value: a.val() }).prependTo(b); a.is(":disabled") && c.attr("disabled", "disabled"); a.is(":selected") && c.prop("checked", "checked"); c.on("change.multiselect", function () {
                 d(this).prop("checked") ? a.prop("selected", !0) :
                 a.prop("selected", !1); a.trigger("change", [!0])
