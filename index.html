@@ -448,6 +448,37 @@
                     </svg>
                   </button>
                 </div>
+
+                <label for="addTestCase">Test name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addTestCase">
+                  <button class="btn btn-primary dd-add-btn" id="addTestCaseBtn">
+                    Add Test
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+                <label for="addAdvice">Advice name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addAdvice">
+                  <button class="btn btn-primary dd-add-btn" id="addAdviceBtn">
+                    Add Advice
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+                <label for="addReview">Review name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addReview">
+                  <button class="btn btn-primary dd-add-btn" id="addReviewBtn">
+                    Add Review
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
               </div>
             </div>  
           </div>
@@ -583,7 +614,77 @@
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
                   </button>
                 </div>
-              </div>  
+              </div> 
+              
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editTestCaseSelect">Test</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editTestCaseSelect">
+                      <option value="default">Choose Test</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editTestCaseDD">New test name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editTestCaseDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editTestCaseBtn" class="btn btn-primary manage-add-btn">
+                    Edit test
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div> 
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editAdviceSelect">Advice</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editAdviceSelect">
+                      <option value="default">Choose Advice</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editAdviceDD">New advice name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editAdviceDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editAdviceBtn" class="btn btn-primary manage-add-btn">
+                    Edit advice
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div> 
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editReviewSelect">Review</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editReviewSelect">
+                      <option value="default">Choose Review</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editReviewDD">New review name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editReviewDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editReviewBtn" class="btn btn-primary manage-add-btn">
+                    Edit review
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div> 
+
             </div>
           </div>
         </div>
@@ -861,6 +962,8 @@
     })
 
     $('#dd_elems_nav').click(function () {
+      $('input:text').val('');
+      $('select').val('default');
       $(document).attr("title", "Add Dropdown Elements");
       $('#doc_title').html('Manage Dropdowns')
 
@@ -874,6 +977,8 @@
     })
 
     $('#dd_elems_edit_nav').click(function () {
+      $('input:text').val('');
+      $('select').val('default');
       $(document).attr("title", "Edit Dropdown Elements");
       $('#doc_title').html('Manage Dropdowns')
 
@@ -888,6 +993,8 @@
     })
 
     $('#medicines_nav').click(function () {
+      $('input:text').val('');
+      $('select').val('default');
       $(document).attr("title", "Medicines");
       $('#doc_title').html('Medicines')
 
@@ -901,6 +1008,8 @@
     })
 
     $('#cases_nav').click(function () {
+      $('input:text').val('');
+      $('select').val('default');
       $(document).attr("title", "Cases");
       $('#doc_title').html('Medicines')
 

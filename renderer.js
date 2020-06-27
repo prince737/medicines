@@ -422,9 +422,6 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
     $('#caseIdInputEdit').val(caseId);
     $('#casesEditModal').modal('show')
 
-    console.log(caseToBeEdited.chiefComplain)
-
-
     $(function () {
         $('#chiefComplainInputEdit').multiSelect().trigger('change');
         $('#testCaseInputEdit').multiSelect().trigger('change');
@@ -593,6 +590,39 @@ $('#addChiefComplainBtn').click(function () {
     })
 })
 
+$('#addTestCaseBtn').click(function () {
+    addDropDownItem({
+        name: "Test",
+        inputId: "addTestCase",
+        fileName: "test.json",
+        fileKey: "test",
+        formInputId: "testCaseInput",
+        isMultiSelect: true
+    })
+})
+
+$('#addAdviceBtn').click(function () {
+    addDropDownItem({
+        name: "Advice",
+        inputId: "addAdvice",
+        fileName: "advice.json",
+        fileKey: "advice",
+        formInputId: "adviceInput",
+        isMultiSelect: true
+    })
+})
+
+$('#addReviewBtn').click(function () {
+    addDropDownItem({
+        name: "Review",
+        inputId: "addReview",
+        fileName: "review.json",
+        fileKey: "review",
+        formInputId: "reviewInput",
+        isMultiSelect: true
+    })
+})
+
 $('#editTypeBtn').click(function () {
     editDropDownItem({
         name: "Type",
@@ -659,6 +689,48 @@ $('#editChiefComplainBtn').click(function () {
     })
 })
 
+$('#editTestCaseBtn').click(function () {
+    editDropDownItem({
+        name: "Test",
+        inputId: "editTestCaseSelect",
+        newInputId: "editTestCaseDD",
+        fileName: "test.json",
+        fileKey: "test",
+        type: "cases",
+        dataKey: "test",
+        formInputId: "testCaseInput",
+        isMultiSelect: true
+    })
+})
+
+$('#editAdviceBtn').click(function () {
+    editDropDownItem({
+        name: "Advice",
+        inputId: "editAdviceSelect",
+        newInputId: "editAdviceDD",
+        fileName: "advice.json",
+        fileKey: "advice",
+        type: "cases",
+        dataKey: "advice",
+        formInputId: "adviceInput",
+        isMultiSelect: true
+    })
+})
+
+$('#editReviewBtn').click(function () {
+    editDropDownItem({
+        name: "review",
+        inputId: "editReviewSelect",
+        newInputId: "editReviewDD",
+        fileName: "review.json",
+        fileKey: "review",
+        type: "cases",
+        dataKey: "review",
+        formInputId: "reviewInput",
+        isMultiSelect: true
+    })
+})
+
 function readManageDropdownData() {
     //TYPES MANAGE
     let types = readDataFromFile({ fileName: 'types.json', defaultData: '{"types":[]}' })
@@ -689,6 +761,24 @@ function readManageDropdownData() {
     refreshDropdownData(chiefComplain, 'editChiefComplainSelect', 'chiefComplain')
     refreshDropdownData(chiefComplain, 'chiefComplainInput', 'chiefComplain', true)
     refreshDropdownData(chiefComplain, 'chiefComplainInputEdit', 'chiefComplain', true)
+
+    //TEST MANAGE
+    let test = readDataFromFile({ fileName: 'test.json', defaultData: '{"test":[]}' })
+    refreshDropdownData(test, 'editTestCaseSelect', 'test')
+    refreshDropdownData(test, 'testCaseInput', 'test', true)
+    refreshDropdownData(test, 'testCaseInputEdit', 'test', true)
+
+    //ADVICE MANAGE
+    let advice = readDataFromFile({ fileName: 'advice.json', defaultData: '{"advice":[]}' })
+    refreshDropdownData(advice, 'editAdviceSelect', 'advice')
+    refreshDropdownData(advice, 'adviceInput', 'advice', true)
+    refreshDropdownData(advice, 'adviceInputEdit', 'advice', true)
+
+    //REVIEW MANAGE
+    let review = readDataFromFile({ fileName: 'review.json', defaultData: '{"review":[]}' })
+    refreshDropdownData(review, 'editReviewSelect', 'review')
+    refreshDropdownData(review, 'reviewInput', 'review', true)
+    refreshDropdownData(review, 'reviewInputEdit', 'review', true)
 }
 
 function readDataFromFile(options) {
@@ -727,7 +817,7 @@ function addDropDownItem(options) {
 
     let newVal = $('#' + inputId).val()
     if (!newVal) {
-        dialog.showErrorBox("Error", "Please fill in the name of the new 'Route'.")
+        dialog.showErrorBox("Error", "Please fill in the name of the new '"+name+"'.")
         return
     }
 
