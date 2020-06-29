@@ -42,11 +42,11 @@ function readData(initial=false) {
     var casesFile = path.join(docsPath, '/medicines/cases.json');
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath);
-        fs.writeFileSync(med, {}, {
+        fs.writeFileSync(med, '{}', {
             encoding: "utf8",
             flag: "w+",
         })
-        fs.writeFileSync(casesFile, {}, {
+        fs.writeFileSync(casesFile, '{}', {
             encoding: "utf8",
             flag: "w+",
         })
@@ -843,11 +843,14 @@ function readManageDropdownData() {
 function readDataFromFile(options) {
     var p = path.join(docsPath, '/medicines/' + options.fileName);
     if (!fs.existsSync(p)) { //file does not exists
+        console.log(p)
         fs.writeFileSync(p, options.defaultData, {
             encoding: "utf8",
             flag: "w+",
         })
     }
+    console.log(JSON.parse(fs.readFileSync(p, 'utf-8')))
+    console.log(options)
     return JSON.parse(fs.readFileSync(p, 'utf-8'))
 }
 

@@ -55,7 +55,7 @@ body{
 
 .viewCaseOlRow{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
 }
 
 .viewCaseRow h6{
@@ -76,6 +76,7 @@ body{
     padding: 0 .5rem;
     color: #bd2130;
     font-weight: bold;
+    hyphens: auto;
 }
 
 .caseKeyOlValue ol{
