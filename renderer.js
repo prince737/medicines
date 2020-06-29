@@ -751,7 +751,7 @@ $('#editChiefComplainBtn').click(function () {
 $('#editTestCaseBtn').click(function () {
     editDropDownItem({
         name: "Test",
-        inputId: "editTestCaseSelect",
+        inputId: "editTestSelect",
         newInputId: "editTestCaseDD",
         fileName: "test.json",
         fileKey: "test",
@@ -823,7 +823,7 @@ function readManageDropdownData() {
 
     //TEST MANAGE
     let test = readDataFromFile({ fileName: 'test.json', defaultData: '{"test":[]}' })
-    refreshDropdownData(test, 'editTestCaseSelect', 'test')
+    refreshDropdownData(test, 'editTestSelect', 'test')
     refreshDropdownData(test, 'testCaseInput', 'test', true)
     refreshDropdownData(test, 'testCaseInputEdit', 'test', true)
 
