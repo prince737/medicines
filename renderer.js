@@ -131,12 +131,12 @@ function readData(initial=false) {
         $('#chiefComplainInput').multiSelect();
         $('#testCaseInput').multiSelect();
         $('#adviceInput').multiSelect();
-        $('#reviewInput').multiSelect();
+        // $('#reviewInput').multiSelect();
 
         $('#chiefComplainInputEdit').multiSelect();
         $('#testCaseInputEdit').multiSelect();
         $('#adviceInputEdit').multiSelect();
-        $('#reviewInputEdit').multiSelect();
+        // $('#reviewInputEdit').multiSelect();
     }
 }
 
@@ -426,8 +426,67 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
         $('#chiefComplainInputEdit').multiSelect().trigger('change');
         $('#testCaseInputEdit').multiSelect().trigger('change');
         $('#adviceInputEdit').multiSelect().trigger('change');
-        $('#reviewInputEdit').multiSelect().trigger('change');
+        // $('#reviewInputEdit').multiSelect().trigger('change');
     });
+})
+
+$('#cases_container').on('click', '.openCaseButton', function (e) {
+    let caseId = e.target.id.split('-')[0]
+    var p = path.join(docsPath, '/medicines/cases.json');
+    let cases = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    let selectedCase = cases[caseId]
+
+    let chiefComplain = "<ol>"
+    for(let cc of selectedCase.chiefComplain){
+        chiefComplain += `<li>${cc}</li>`
+    }
+    chiefComplain += '</ol>'
+
+    let medication = "<ol>"
+    for(let med of selectedCase.medication.split('\n')){
+        medication += `<li>${med}</li>`
+    }
+    medication += '</ol>'
+
+    let history = "<ol>"
+    for(let hist of selectedCase.history.split('\n')){
+        history += `<li>${hist}</li>`
+    }
+    history += '</ol>'
+
+    let tests = "<ol>"
+    for(let t of selectedCase.test){
+        tests += `<li>${t}</li>`
+    }
+    tests += '</ol>'
+
+    let advice = "<ol>"
+    for(let adv of selectedCase.advice){
+        advice += `<li>${adv}</li>`
+    }
+    advice += '</ol>'
+
+    let review = "<ol>"
+    for(let rev of selectedCase.review.split('\n')){
+        review += `<li>${rev}</li>`
+    }
+    review += '</ol>'
+
+    $('#caseDateValue').html(selectedCase.date);
+    $('#caseAgeValue').html(selectedCase.age);
+    $('#caseGenderValue').html(selectedCase.gender);
+    $('#caseBPValue').html(selectedCase.bloodPressure);
+    $('#casePulseValue').html(selectedCase.pulse);
+    $('#caseTempValue').html(selectedCase.temperature);
+    $('#caseSPO2Value').html(selectedCase.spo2);
+    $('#caseCCValue').html(chiefComplain);
+    $('#caseMedicationValue').html(medication);
+    $('#caseHistoryValue').html(history);
+    $('#casetestValue').html(tests);
+    $('#caseAdviceValue').html(advice);
+    $('#caseReviewValue').html(review);
+    $('#caseNoteValue').html(selectedCase.note);
+    $('#casesOpenModal').modal('show')
 })
 
 
@@ -612,16 +671,16 @@ $('#addAdviceBtn').click(function () {
     })
 })
 
-$('#addReviewBtn').click(function () {
-    addDropDownItem({
-        name: "Review",
-        inputId: "addReview",
-        fileName: "review.json",
-        fileKey: "review",
-        formInputId: "reviewInput",
-        isMultiSelect: true
-    })
-})
+// $('#addReviewBtn').click(function () {
+//     addDropDownItem({
+//         name: "Review",
+//         inputId: "addReview",
+//         fileName: "review.json",
+//         fileKey: "review",
+//         formInputId: "reviewInput",
+//         isMultiSelect: true
+//     })
+// })
 
 $('#editTypeBtn').click(function () {
     editDropDownItem({
@@ -717,19 +776,19 @@ $('#editAdviceBtn').click(function () {
     })
 })
 
-$('#editReviewBtn').click(function () {
-    editDropDownItem({
-        name: "review",
-        inputId: "editReviewSelect",
-        newInputId: "editReviewDD",
-        fileName: "review.json",
-        fileKey: "review",
-        type: "cases",
-        dataKey: "review",
-        formInputId: "reviewInput",
-        isMultiSelect: true
-    })
-})
+// $('#editReviewBtn').click(function () {
+//     editDropDownItem({
+//         name: "review",
+//         inputId: "editReviewSelect",
+//         newInputId: "editReviewDD",
+//         fileName: "review.json",
+//         fileKey: "review",
+//         type: "cases",
+//         dataKey: "review",
+//         formInputId: "reviewInput",
+//         isMultiSelect: true
+//     })
+// })
 
 function readManageDropdownData() {
     //TYPES MANAGE
@@ -775,10 +834,10 @@ function readManageDropdownData() {
     refreshDropdownData(advice, 'adviceInputEdit', 'advice', true)
 
     //REVIEW MANAGE
-    let review = readDataFromFile({ fileName: 'review.json', defaultData: '{"review":[]}' })
-    refreshDropdownData(review, 'editReviewSelect', 'review')
-    refreshDropdownData(review, 'reviewInput', 'review', true)
-    refreshDropdownData(review, 'reviewInputEdit', 'review', true)
+    // let review = readDataFromFile({ fileName: 'review.json', defaultData: '{"review":[]}' })
+    // refreshDropdownData(review, 'editReviewSelect', 'review')
+    // refreshDropdownData(review, 'reviewInput', 'review', true)
+    // refreshDropdownData(review, 'reviewInputEdit', 'review', true)
 }
 
 function readDataFromFile(options) {

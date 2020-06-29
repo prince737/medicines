@@ -9,7 +9,7 @@ body{
 }
 
 #dd_manage{
-    display: block;
+    display: none;
 }
 
 #medicines_container{
@@ -17,7 +17,7 @@ body{
 }
 
 #cases_container{
-    display: none;
+    display: block;
 }
 
 #dd_edit{
@@ -36,6 +36,76 @@ body{
     display: flex;
 }
 
+#casesOpenModal .modal-dialog{
+    max-width: 60%;
+}
+
+#casesOpenModal .modal-body{
+    padding: 1rem 2rem;
+    font-size: 14px;
+}
+
+.viewCaseRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.viewCaseOlRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.viewCaseRow h6{
+    width: 100%;
+    margin: 0;
+    margin-bottom: .25rem;
+}
+
+.caseKeyValue{
+    border-bottom: 1px solid grey;
+    margin-left: .5rem;
+    padding: 0 .5rem;
+    color: #bd2130;
+    font-weight: bold;
+}
+
+.caseKeyOlValue{
+    padding: 0 .5rem;
+    color: #bd2130;
+    font-weight: bold;
+}
+
+.caseKeyOlValue ol{
+    padding-left: 1rem;
+    margin: .25rem 0;
+}
+
+.adviceWrapper{
+    grid-column-start: 2;
+}
+
+.viewCaseBlockRow{
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.viewCaseBlockRow .caseKey{
+    margin-bottom: .25rem;
+}
+
+.viewCaseBlockRow .caseKeyValue{
+    display: inline-block;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.noteWrapper .caseKeyValue{
+    border-bottom: 1px dotted gray;
+}
 
 .manage-add-btn{
     display: flex;

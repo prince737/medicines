@@ -435,7 +435,7 @@
             </div>
           </div>
           <div class="col-lg-6">
-            <div class="card">
+            <div class="card" style="height:100%">
               <div class="card-body">
                 <h5 style="margin-bottom: 2rem">Case Dropdown Elements</h5>
 
@@ -464,16 +464,6 @@
                   <input type="text" class="form-control" id="addAdvice">
                   <button class="btn btn-primary dd-add-btn" id="addAdviceBtn">
                     Add Advice
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
-                    </svg>
-                  </button>
-                </div>
-
-                <label for="addReview">Review name</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" id="addReview">
-                  <button class="btn btn-primary dd-add-btn" id="addReviewBtn">
-                    Add Review
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                     </svg>
                   </button>
@@ -662,29 +652,6 @@
                 </div>
               </div> 
 
-              <div class="row">
-                <div class="col-lg-5">
-                  <label for="editReviewSelect">Review</label>
-                  <div class="form-group">
-                    <select class="form-control" id="editReviewSelect">
-                      <option value="default">Choose Review</option>
-                    </select>
-                  </div>
-                </div>  
-                <div class="col-lg-5">
-                  <label for="editReviewDD">New review name</label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="editReviewDD">
-                  </div>
-                </div>  
-                <div class="col-lg-2 editButtonContainer">
-                  <button id="editReviewBtn" class="btn btn-primary manage-add-btn">
-                    Edit review
-                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
-                  </button>
-                </div>
-              </div> 
-
             </div>
           </div>
         </div>
@@ -692,6 +659,102 @@
     </div>
 
     <div class="row" id="cases_container">
+
+      <div class="modal fade" id="casesOpenModal" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Resting my case</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="viewCaseRow">
+                <div class="dateWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Date</span>
+                  <span class="caseKeyValue" id="caseDateValue"></span>
+                </div>
+                <div class="ageWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Age</span>
+                  <span class="caseKeyValue" id="caseAgeValue"></span>
+                </div>
+                <div class="genderWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Gender</span>
+                  <span class="caseKeyValue" id="caseGenderValue"></span>
+                </div>
+              </div>
+              <div class="viewCaseRow">
+                <h6>Vitals</h6>
+                <div class="bpWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">BP: </span>
+                  <span class="caseKeyValue" id="caseBPValue"></span>
+                  <span class="caseKeyUnit">mmhg</span>
+                </div> 
+                <div class="pulseWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Pulse: </span>
+                  <span class="caseKeyValue" id="casePulseValue"></span>
+                  <span class="caseKeyUnit">/min</span>
+                </div> 
+                <div class="tempWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Temp: </span>
+                  <span class="caseKeyValue" id="caseTempValue"></span>
+                  <span class="caseKeyUnit">°F</span>
+                </div>
+                <div class="spo2Wrapper viewCaseKeyWrapper">
+                  <span class="caseKey">SPO2: </span>
+                  <span class="caseKeyValue" id="caseSPO2Value"></span>
+                  <span class="caseKeyUnit">%</span>
+                </div>  
+              </div> 
+              <div class="viewCaseOlRow">
+                <div class="ccWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Chief Complain: </span>
+                  <span class="caseKeyOlValue" id="caseCCValue">
+                  </span>
+                </div>
+                <div class="medicationWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Medication: </span>
+                  <span class="caseKeyOlValue" id="caseMedicationValue">
+                  </span>
+                </div> 
+              </div> 
+              <div class="viewCaseOlRow">
+                <div class="historyWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">History of: </span>
+                  <span class="caseKeyOlValue" id="caseHistoryValue">
+                  </span>
+                </div>
+                <div class="testWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Tests: </span>
+                  <span class="caseKeyOlValue" id="casetestValue">
+                  </span>
+                </div> 
+              </div> 
+              <div class="viewCaseOlRow">
+                <div class="adviceWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Advice: </span>
+                  <span class="caseKeyOlValue" id="caseAdviceValue">
+                  </span>
+                </div> 
+              </div> 
+              <div class="viewCaseOlRow">
+                <div class="reviewWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Review</span>
+                  <span class="caseKeyOlValue" id="caseReviewValue"></span>
+                </div>
+              </div>  
+              <div class="viewCaseRow">
+                <div class="noteWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Note</span>
+                  <span class="caseKeyValue" id="caseNoteValue"></span>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <div class="modal fade " id="casesAddModal" tabindex="-1">
         <div class="modal-dialog modal-lg" role="document">
@@ -767,8 +830,7 @@
               </div>
               <div class="form-group">
                 <label for="reviewInput">Review</label>
-                <select class="form-control" id="reviewInput" multiple>
-                </select>
+                <textarea class="form-control" id="reviewInput"></textarea>
               </div>
               <div class="form-group">
                 <label for="noteInput">Note</label>
@@ -857,8 +919,7 @@
               </div>
               <div class="form-group">
                 <label for="reviewInputEdit">Review</label>
-                <select class="form-control" id="reviewInputEdit" multiple>
-                </select>
+                <textarea class="form-control" id="reviewInputEdit"></textarea>
               </div>
               <div class="form-group">
                 <label for="noteInputEdit">Note</label>
