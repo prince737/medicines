@@ -37,12 +37,24 @@ body{
 }
 
 #casesOpenModal .modal-dialog{
-    max-width: 60%;
+    max-width: 65%;
 }
 
 #casesOpenModal .modal-body{
     padding: 1rem 2rem;
     font-size: 14px;
+}
+
+@media (max-width: 1320px) {
+    #casesOpenModal .modal-dialog{
+        max-width: 75%;
+    }
+}
+
+@media (max-width: 700px) {
+    #casesOpenModal .modal-dialog{
+        max-width: 100%;
+    }
 }
 
 .viewCaseRow{

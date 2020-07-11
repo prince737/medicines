@@ -14,6 +14,7 @@ const {
     dialog
 } = require('electron').remote;
 const docsPath = app.getPath('documents')
+const prompt = require('electron-prompt');
 
 
 /*******************************************************************/
@@ -412,6 +413,7 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
     $('#pulseInputEdit').val(caseToBeEdited.pulse);
     $('#temperatureInputEdit').val(caseToBeEdited.temperature);
     $('#spo2InputEdit').val(caseToBeEdited.spo2);
+    $('#weightInputEdit').val(caseToBeEdited.weight);
     $('#chiefComplainInputEdit').val(caseToBeEdited.chiefComplain);
     $('#historyInputEdit').val(caseToBeEdited.history);
     $('#medicationInputEdit').val(caseToBeEdited.medication);
@@ -472,6 +474,12 @@ $('#cases_container').on('click', '.openCaseButton', function (e) {
     }
     review += '</ol>'
 
+    let note = "<ol>"
+    for(let nt of selectedCase.note.split('\n')){
+        note += `<li>${nt}</li>`
+    }
+    note += '</ol>'
+
     $('#caseDateValue').html(selectedCase.date);
     $('#caseAgeValue').html(selectedCase.age);
     $('#caseGenderValue').html(selectedCase.gender);
@@ -479,13 +487,14 @@ $('#cases_container').on('click', '.openCaseButton', function (e) {
     $('#casePulseValue').html(selectedCase.pulse);
     $('#caseTempValue').html(selectedCase.temperature);
     $('#caseSPO2Value').html(selectedCase.spo2);
+    $('#caseWeightValue').html(selectedCase.weight);
     $('#caseCCValue').html(chiefComplain);
     $('#caseMedicationValue').html(medication);
     $('#caseHistoryValue').html(history);
     $('#casetestValue').html(tests);
     $('#caseAdviceValue').html(advice);
     $('#caseReviewValue').html(review);
-    $('#caseNoteValue').html(selectedCase.note);
+    $('#caseNoteValue').html(note);
     $('#casesOpenModal').modal('show')
 })
 
@@ -499,6 +508,7 @@ $('#save-case-btn').click(function () {
     var pulse = $('#pulseInput').val();
     var temperature = $('#temperatureInput').val();
     var spo2 = $('#spo2Input').val();
+    var weight = $('#weightInput').val();
     var chiefComplain = $('#chiefComplainInput').val();
     var history = $('#historyInput').val();
     var medication = $('#medicationInput').val();
@@ -519,6 +529,7 @@ $('#save-case-btn').click(function () {
         "pulse": pulse,
         "temperature": temperature,
         "spo2": spo2,
+        "weight": weight,
         "chiefComplain": chiefComplain,
         "history": history,
         "medication": medication,
@@ -549,6 +560,7 @@ $('#update-case-btn').click(function () {
     var pulse = $('#pulseInputEdit').val();
     var temperature = $('#temperatureInputEdit').val();
     var spo2 = $('#spo2InputEdit').val();
+    var weight = $('#weightInputEdit').val();
     var chiefComplain = $('#chiefComplainInputEdit').val();
     var history = $('#historyInputEdit').val();
     var medication = $('#medicationInputEdit').val();
@@ -571,6 +583,7 @@ $('#update-case-btn').click(function () {
         "pulse": pulse,
         "temperature": temperature,
         "spo2": spo2,
+        "weight": weight,
         "chiefComplain": chiefComplain,
         "history": history,
         "medication": medication,
@@ -855,6 +868,7 @@ function readDataFromFile(options) {
 }
 
 function refreshDropdownData(data, id, key, isMultiSelect = false) {
+    let val = $('#'+id).val()
     var select = document.getElementById(id);
     select.options.length = 1;
     for (let [i, type] of data[key].entries()) {
@@ -866,18 +880,21 @@ function refreshDropdownData(data, id, key, isMultiSelect = false) {
         $(function () {
             $('#'+id).multiSelect().trigger('change');
         });
+
+        $('#'+id).val(val)
     }
 }
 
 function addDropDownItem(options) {
     name = options.name
     inputId = options.inputId
+    value = options.value
     fileName = options.fileName
     fileKey = options.fileKey
     formInputId = options.formInputId
     isMultiSelect = options.isMultiSelect
 
-    let newVal = $('#' + inputId).val()
+    let newVal = value? value: $('#' + inputId).val()
     if (!newVal) {
         dialog.showErrorBox("Error", "Please fill in the name of the new '"+name+"'.")
         return
@@ -985,3 +1002,176 @@ function updateDropDownFieldInElements(type, dataKey, oldValue, newValue){
 
     readData()
 }
+
+
+/*******************************************************************/
+/*********                 ADD FROM MODAL                **********/
+/*******************************************************************/
+
+$('#addChiefComplainFromModal').click(function () {
+    prompt({
+        title: 'Add chief Complain',
+        label: 'New Chief Complain:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addChiefComplainFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "ChiefComplain",
+                value: r,
+                fileName: "chiefComplain.json",
+                fileKey: "chiefComplain",
+                formInputId: "chiefComplainInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})
+
+$('#addTestCaseFromModal').click(function () {
+    prompt({
+        title: 'Add new test',
+        label: 'Test name:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addTestCaseFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "Test",
+                value: r,
+                fileName: "test.json",
+                fileKey: "test",
+                formInputId: "testCaseInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})
+
+$('#addAdviceFromModal').click(function () {
+    prompt({
+        title: 'Add new advice',
+        label: 'Advice name:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addAdviceFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "Advice",
+                value: r,
+                fileName: "advice.json",
+                fileKey: "advice",
+                formInputId: "adviceInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})
+
+$('#addChiefComplainFromEditModal').click(function () {
+    prompt({
+        title: 'Add chief Complain',
+        label: 'New Chief Complain:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addChiefComplainFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "ChiefComplain",
+                value: r,
+                fileName: "chiefComplain.json",
+                fileKey: "chiefComplain",
+                formInputId: "chiefComplainInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})
+
+$('#addTestCaseFromEditModal').click(function () {
+    prompt({
+        title: 'Add new test',
+        label: 'Test name:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addTestCaseFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "Test",
+                value: r,
+                fileName: "test.json",
+                fileKey: "test",
+                formInputId: "testCaseInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})
+
+$('#addAdviceFromEditModal').click(function () {
+    prompt({
+        title: 'Add new advice',
+        label: 'Advice name:',
+        inputAttrs: {
+            type: 'text',
+            required: true
+        },
+        type: 'input',
+        alwaysOnTop: true
+    })
+    .then((r) => {
+        if(!r){
+            console.info("Cancel addAdviceFromModal prompt")
+        }else{
+            addDropDownItem({
+                name: "Advice",
+                value: r,
+                fileName: "advice.json",
+                fileKey: "advice",
+                formInputId: "adviceInput",
+                isMultiSelect: true
+            })
+        }
+    })
+    .catch(console.error);
+})

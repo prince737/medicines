@@ -689,7 +689,7 @@
                 <div class="bpWrapper viewCaseKeyWrapper">
                   <span class="caseKey">BP: </span>
                   <span class="caseKeyValue" id="caseBPValue"></span>
-                  <span class="caseKeyUnit">mmhg</span>
+                  <span class="caseKeyUnit">mmHg</span>
                 </div> 
                 <div class="pulseWrapper viewCaseKeyWrapper">
                   <span class="caseKey">Pulse: </span>
@@ -702,9 +702,14 @@
                   <span class="caseKeyUnit">°F</span>
                 </div>
                 <div class="spo2Wrapper viewCaseKeyWrapper">
-                  <span class="caseKey">SPO2: </span>
+                  <span class="caseKey">SpO2: </span>
                   <span class="caseKeyValue" id="caseSPO2Value"></span>
                   <span class="caseKeyUnit">%</span>
+                </div> 
+                <div class="weightWrapper viewCaseKeyWrapper">
+                  <span class="caseKey">Weight: </span>
+                  <span class="caseKeyValue" id="caseWeightValue"></span>
+                  <span class="caseKeyUnit">kg</span>
                 </div>  
               </div> 
               <div class="viewCaseOlRow">
@@ -744,10 +749,10 @@
                   <span class="caseKeyOlValue" id="caseReviewValue"></span>
                 </div>
               </div>  
-              <div class="viewCaseRow">
+              <div class="viewCaseOlRow">
                 <div class="noteWrapper viewCaseKeyWrapper">
                   <span class="caseKey">Note</span>
-                  <span class="caseKeyValue" id="caseNoteValue"></span>
+                  <span class="caseKeyOlValue" id="caseNoteValue"></span>
                 </div>
               </div>  
             </div>
@@ -784,8 +789,8 @@
                 <label for="genderInput">Gender</label>
                 <select class="form-control" id="genderInput">
                   <option value="default"">Choose gender</option>
-                  <option value="male"">Male</option>
-                  <option value="female"">Female</option>
+                  <option value="male"">MALE</option>
+                  <option value="female"">FEMALE</option>
                   <option value="other"">Other</option>
                 </select>
               </div>
@@ -802,11 +807,19 @@
                 <input type="text" class="form-control" id="temperatureInput" />
               </div>
               <div class="form-group">
-                <label for="spo2Input">Spo2</label>
+                <label for="spo2Input">SpO2</label>
                 <input type="text" class="form-control" id="spo2Input" />
               </div>
               <div class="form-group">
+                <label for="weightInput">Weight</label>
+                <input type="text" class="form-control" id="weightInput" />
+              </div>
+              <div class="form-group">
                 <label for="chiefComplainInput">Chief complain</label>
+                <button class="btn btn-link" id="addChiefComplainFromModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="chiefComplainInput" multiple>
                 </select>
               </div>
@@ -820,11 +833,19 @@
               </div>
               <div class="form-group">
                 <label for="testCaseInput">Test</label>
+                <button class="btn btn-link" id="addTestCaseFromModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="testCaseInput" multiple>
                 </select>
               </div>
               <div class="form-group">
                 <label for="adviceInput">Advice</label>
+                <button class="btn btn-link" id="addAdviceFromModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="adviceInput" multiple>
                 </select>
               </div>
@@ -891,11 +912,19 @@
                 <input type="text" class="form-control" id="temperatureInputEdit" />
               </div>
               <div class="form-group">
-                <label for="spo2InputEdit">Spo2</label>
+                <label for="spo2InputEdit">SpO2</label>
                 <input type="text" class="form-control" id="spo2InputEdit" />
               </div>
               <div class="form-group">
+                <label for="weightInputEdit">Weight</label>
+                <input type="text" class="form-control" id="weightInputEdit" />
+              </div>
+              <div class="form-group">
                 <label for="chiefComplainInputEdit">Chief complain</label>
+                <button class="btn btn-link" id="addChiefComplainFromEditModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="chiefComplainInputEdit" multiple>
                 </select>
               </div>
@@ -909,11 +938,19 @@
               </div>
               <div class="form-group">
                 <label for="testCaseInputEdit">Test</label>
+                <button class="btn btn-link" id="addTestCaseFromEditModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="testCaseInputEdit" multiple>
                 </select>
               </div>
               <div class="form-group">
                 <label for="adviceInputEdit">Advice</label>
+                <button class="btn btn-link" id="addAdviceFromEditModal" style="font-size: .875rem;">
+                  Add new
+                  <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#0056b3" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                </button>
                 <select class="form-control" id="adviceInputEdit" multiple>
                 </select>
               </div>
@@ -982,6 +1019,7 @@
   <script src="src/js/popper.min.js"></script>
   <script src="src/js/bootstrap.min.js"></script>
   <script src="src/js/test.js"></script>
+  <script type="text/javascript" src="src/js/chosen.jquery.min.js"></script>
   <script type="text/javascript" src="src/js/dataTable.js"></script>
   <script type="text/javascript" src="src/js/dataTable.bootstrap.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
