@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="src/css/bootstrap.min.css">
   <link rel="stylesheet" href="src/css/multiselect.css">
   <link rel="stylesheet" href="src/css/styles.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="src/css/datatable.bootstrap4.css" />
 
   <title>Medicines</title>
 </head>
@@ -1060,11 +1060,10 @@
   <script src="src/js/popper.min.js"></script>
   <script src="src/js/bootstrap.min.js"></script>
   <script src="src/js/test.js"></script>
-  <script type="text/javascript" src="src/js/chosen.jquery.min.js"></script>
   <script type="text/javascript" src="src/js/dataTable.js"></script>
   <script type="text/javascript" src="src/js/dataTable.bootstrap.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="src/js/datatable.buttons.js"></script>
+  <script type="text/javascript" src="src/js/buttons.html5.js"></script>
 
 
   <script>
@@ -1103,7 +1102,7 @@
 
     $('#dd_elems_nav').click(function () {
       $('input:text').val('');
-      $('select').val('default');
+      $('select:not(.custom-select)').val('default');
       $(document).attr("title", "Add Dropdown Elements");
       $('#doc_title').html('Manage Dropdowns')
 
@@ -1118,7 +1117,7 @@
 
     $('#dd_elems_edit_nav').click(function () {
       $('input:text').val('');
-      $('select').val('default');
+      $('select:not(.custom-select)').val('default');
       $(document).attr("title", "Edit Dropdown Elements");
       $('#doc_title').html('Manage Dropdowns')
 
@@ -1134,7 +1133,7 @@
 
     $('#medicines_nav').click(function () {
       $('input:text').val('');
-      $('select').val('default');
+      $('select:not(.custom-select)').val('default');
       $(document).attr("title", "Medicines");
       $('#doc_title').html('Medicines')
 
@@ -1149,7 +1148,7 @@
 
     $('#cases_nav').click(function () {
       $('input:text').val('');
-      $('select').val('default');
+      $('select:not(.custom-select)').val('default');
       $(document).attr("title", "Cases");
       $('#doc_title').html('Medicines')
 

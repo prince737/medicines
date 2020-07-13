@@ -13,11 +13,11 @@ body{
 }
 
 #medicines_container{
-    display: none;
+    display: block;
 }
 
 #cases_container{
-    display: block;
+    display: none;
 }
 
 #dd_edit{
