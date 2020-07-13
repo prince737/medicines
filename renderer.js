@@ -495,6 +495,7 @@ $('#cases_container').on('click', '.openCaseButton', function (e) {
     $('#caseAdviceValue').html(advice);
     $('#caseReviewValue').html(review);
     $('#caseNoteValue').html(note);
+    $('#case-open-title').html(selectedCase.case);
     $('#casesOpenModal').modal('show')
 })
 
@@ -651,6 +652,16 @@ $('#addPerBtn').click(function () {
     })
 })
 
+$('#addShopsBtn').click(function () {
+    addDropDownItem({
+        name: "Shop",
+        inputId: "addShops",
+        fileName: "shop.json",
+        fileKey: "shop",
+        formInputId: "shopsInput"
+    })
+})
+
 $('#addChiefComplainBtn').click(function () {
     addDropDownItem({
         name: "ChiefComplain",
@@ -747,6 +758,19 @@ $('#editPerBtn').click(function () {
     })
 })
 
+$('#editShopBtn').click(function () {
+    editDropDownItem({
+        name: "Shop",
+        inputId: "editShopSelect",
+        newInputId: "editShopDD",
+        fileName: "shop.json",
+        fileKey: "shop",
+        type: "medicines",
+        formInputId: "shopsInput",
+        dataKey: "shop"
+    })
+})
+
 $('#editChiefComplainBtn').click(function () {
     editDropDownItem({
         name: "Chief Complain",
@@ -828,6 +852,12 @@ function readManageDropdownData() {
     refreshDropdownData(per, 'unitInput', 'per')
     refreshDropdownData(per, 'unitInputEdit', 'per')
 
+    //SHOP MANAGE
+    let shop = readDataFromFile({ fileName: 'shop.json', defaultData: '{"shop":[]}' })
+    refreshDropdownData(shop, 'editShopSelect', 'shop')
+    refreshDropdownData(shop, 'shopsInput', 'shop')
+    refreshDropdownData(shop, 'shopsInputEdit', 'shop')
+
     //CHIEF COMPLAIN MANAGE
     let chiefComplain = readDataFromFile({ fileName: 'chiefComplain.json', defaultData: '{"chiefComplain":[]}' })
     refreshDropdownData(chiefComplain, 'editChiefComplainSelect', 'chiefComplain')
@@ -856,14 +886,11 @@ function readManageDropdownData() {
 function readDataFromFile(options) {
     var p = path.join(docsPath, '/medicines/' + options.fileName);
     if (!fs.existsSync(p)) { //file does not exists
-        console.log(p)
         fs.writeFileSync(p, options.defaultData, {
             encoding: "utf8",
             flag: "w+",
         })
     }
-    console.log(JSON.parse(fs.readFileSync(p, 'utf-8')))
-    console.log(options)
     return JSON.parse(fs.readFileSync(p, 'utf-8'))
 }
 

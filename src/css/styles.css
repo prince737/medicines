@@ -168,6 +168,13 @@ header h2{
     border-radius: 3px;
     margin-right: 1rem;
     font-size: .825rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.nav-toggle svg{
+    margin-left: .3rem;
 }
 
 .sidebar{
