@@ -151,7 +151,9 @@
             </div>
             <div class="form-group">
               <label for="manufacturerInput">Manufacturer</label>
-              <input type="text" class="form-control" id="manufacturerInput">
+              <select class="form-control" id="manufacturerInput">
+                <option value="default">Choose Manufacturer</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="compInput">Composition</label>
@@ -255,7 +257,9 @@
             </div>
             <div class="form-group">
               <label for="manufacturerInputEdit">Manufacturer</label>
-              <input type="text" class="form-control" id="manufacturerInputEdit">
+              <select class="form-control" id="manufacturerInputEdit">
+                <option value="default">Choose Manufacturer</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="compInputEdit">Composition</label>
@@ -449,6 +453,16 @@
                   </button>
                 </div>
 
+                <label for="addManufacturer">Manufacturer name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addManufacturer">
+                  <button class="btn btn-primary dd-add-btn" id="addManufacturerBtn">
+                    Add Manufacturer
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -617,7 +631,30 @@
                 </div>
                 <div class="col-lg-2 editButtonContainer">
                   <button id="editShopBtn" class="btn btn-primary manage-add-btn">
-                    Edit Per
+                    Edit Shop
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div>  
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editManufacturerSelect">Manufacturer</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editManufacturerSelect">
+                      <option value="default">Choose Manufacturer</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editShopDD">New Manufacturer name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editManufacturerDD">
+                  </div>
+                </div>
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editManufacturerBtn" class="btn btn-primary manage-add-btn">
+                    Edit Manufacturer
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
                   </button>
                 </div>
@@ -719,6 +756,7 @@
                 <div class="ageWrapper viewCaseKeyWrapper">
                   <span class="caseKey">Age</span>
                   <span class="caseKeyValue" id="caseAgeValue"></span>
+                  <span class="caseKeyUnit">Y</span>
                 </div>
                 <div class="genderWrapper viewCaseKeyWrapper">
                   <span class="caseKey">Gender</span>
@@ -935,8 +973,8 @@
                 <label for="genderInputEdit">Gender</label>
                 <select class="form-control" id="genderInputEdit">
                   <option value="default"">Choose gender</option>
-                  <option value="male"">Male</option>
-                  <option value="female"">Female</option>
+                  <option value="male"">MALE</option>
+                  <option value="female"">FEMALE</option>
                   <option value="other"">Other</option>
                 </select>
               </div>

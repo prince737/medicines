@@ -480,9 +480,12 @@ $('#cases_container').on('click', '.openCaseButton', function (e) {
     }
     note += '</ol>'
 
-    $('#caseDateValue').html(selectedCase.date);
+    let d = new Date(selectedCase.date)
+    d = d.toLocaleDateString('en-IN')
+
+    $('#caseDateValue').html(d);
     $('#caseAgeValue').html(selectedCase.age);
-    $('#caseGenderValue').html(selectedCase.gender);
+    $('#caseGenderValue').html(selectedCase.gender.toUpperCase());
     $('#caseBPValue').html(selectedCase.bloodPressure);
     $('#casePulseValue').html(selectedCase.pulse);
     $('#caseTempValue').html(selectedCase.temperature);
@@ -662,6 +665,16 @@ $('#addShopsBtn').click(function () {
     })
 })
 
+$('#addManufacturerBtn').click(function () {
+    addDropDownItem({
+        name: "Manufacturer",
+        inputId: "addManufacturer",
+        fileName: "manufacturer.json",
+        fileKey: "manufacturer",
+        formInputId: "manufacturerInput"
+    })
+})
+
 $('#addChiefComplainBtn').click(function () {
     addDropDownItem({
         name: "ChiefComplain",
@@ -771,6 +784,19 @@ $('#editShopBtn').click(function () {
     })
 })
 
+$('#editManufacturerBtn').click(function () {
+    editDropDownItem({
+        name: "Manufacturer",
+        inputId: "editManufacturerSelect",
+        newInputId: "editManufacturerDD",
+        fileName: "manufacturer.json",
+        fileKey: "manufacturer",
+        type: "medicines",
+        formInputId: "manufacturerInput",
+        dataKey: "manufacturer"
+    })
+})
+
 $('#editChiefComplainBtn').click(function () {
     editDropDownItem({
         name: "Chief Complain",
@@ -857,6 +883,12 @@ function readManageDropdownData() {
     refreshDropdownData(shop, 'editShopSelect', 'shop')
     refreshDropdownData(shop, 'shopsInput', 'shop')
     refreshDropdownData(shop, 'shopsInputEdit', 'shop')
+
+    //MANUFACTURER MANAGE
+    let manufacturer = readDataFromFile({ fileName: 'manufacturer.json', defaultData: '{"manufacturer":[]}' })
+    refreshDropdownData(manufacturer, 'editManufacturerSelect', 'manufacturer')
+    refreshDropdownData(manufacturer, 'manufacturerInput', 'manufacturer')
+    refreshDropdownData(manufacturer, 'manufacturerInputEdit', 'manufacturer')
 
     //CHIEF COMPLAIN MANAGE
     let chiefComplain = readDataFromFile({ fileName: 'chiefComplain.json', defaultData: '{"chiefComplain":[]}' })
