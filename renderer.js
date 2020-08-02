@@ -156,22 +156,26 @@ function formatSideEffects(page = 0) {
     for (let row of table.rows) {
         if (i++ === 0 || row.childNodes[0].classList[0] === 'dataTables_empty') continue;
         let id = row.childNodes[0].innerHTML
-        let sideEffect = row.childNodes[10].innerHTML
+        let sideEffect = row.childNodes[11].innerHTML
+        let shop = row.childNodes[12].innerHTML
 
-        let use = row.childNodes[9].innerHTML
-        let comp = row.childNodes[3].innerHTML
-        let instruction = row.childNodes[7].innerHTML
-        let cls = row.childNodes[8].innerHTML
+        let use = row.childNodes[10].innerHTML
+        let comp = row.childNodes[4].innerHTML
+        let instruction = row.childNodes[8].innerHTML
+        let cls = row.childNodes[9].innerHTML
+        let manufacturer = row.childNodes[3].innerHTML
 
-        if (sideEffect.startsWith('<div onmouseover=') || use.startsWith('<div onmouseover=') || comp.startsWith('<div onmouseover=') || instruction.startsWith('<div onmouseover=') || cls.startsWith('<div onmouseover=')) {
+        if (sideEffect.startsWith('<div onmouseover=') || use.startsWith('<div onmouseover=') || comp.startsWith('<div onmouseover=') || instruction.startsWith('<div onmouseover=') || cls.startsWith('<div onmouseover=') || manufacturer.startsWith('<div onmouseover=') || shop.startsWith('<div onmouseover=')) {
             continue
         }
 
         let modifiedSideEffect = sideEffect
+        let modifiedShop = shop
         let modifiedUse = use
         let modifiedComp = comp
         let modifiedInstruction = instruction
         let modifiedClass = cls
+        let modifiedManufacturer = manufacturer
 
         if (modifiedSideEffect.length > 10) {
             modifiedSideEffect = modifiedSideEffect.substr(0, 11)
@@ -202,11 +206,26 @@ function formatSideEffects(page = 0) {
             modifiedClass = modifiedClass + '...'
             modifiedClass = '<div onmouseover="showClassTooltip(' + id + ')" onmouseleave="hideClassTooltip(' + id + ')" class="sideEffectTd" id="classTd' + id + '">' + modifiedClass + ' <p lang="en" class="sideEffectTooltip" id="classTooltip' + id + '">' + cls + '</p></div>'
         }
-        row.childNodes[10].innerHTML = modifiedSideEffect
-        row.childNodes[9].innerHTML = modifiedUse
-        row.childNodes[3].innerHTML = modifiedComp
-        row.childNodes[7].innerHTML = modifiedInstruction
-        row.childNodes[8].innerHTML = modifiedClass
+
+        if (modifiedManufacturer.length > 15) {
+            modifiedManufacturer = modifiedManufacturer.substr(0, 11)
+            modifiedManufacturer = modifiedManufacturer + '...'
+            modifiedManufacturer = '<div onmouseover="showManufacturerTooltip(' + id + ')" onmouseleave="hideManufacturerTooltip(' + id + ')" class="sideEffectTd" id="manufacturerTd' + id + '">' + modifiedManufacturer + ' <p lang="en" class="sideEffectTooltip" id="manufacturerTooltip' + id + '">' + manufacturer + '</p></div>'
+        }
+
+        if (modifiedShop.length > 15) {
+            modifiedShop = modifiedShop.substr(0, 11)
+            modifiedShop = modifiedShop + '...'
+            modifiedShop = '<div onmouseover="showShopTooltip(' + id + ')" onmouseleave="hideShopTooltip(' + id + ')" class="sideEffectTd" id="shopTd' + id + '">' + modifiedShop + ' <p lang="en" class="sideEffectTooltip" id="shopTooltip' + id + '">' + shop + '</p></div>'
+        }
+
+        row.childNodes[11].innerHTML = modifiedSideEffect
+        row.childNodes[12].innerHTML = modifiedShop
+        row.childNodes[10].innerHTML = modifiedUse
+        row.childNodes[4].innerHTML = modifiedComp
+        row.childNodes[8].innerHTML = modifiedInstruction
+        row.childNodes[9].innerHTML = modifiedClass
+        row.childNodes[3].innerHTML = modifiedManufacturer
     }
 }
 

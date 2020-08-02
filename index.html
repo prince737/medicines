@@ -202,7 +202,7 @@
             <div class="form-group">
               <!-- <label for="shopsInput">Shops</label>
               <input type="text" class="form-control" id="shopsInput"> -->
-              <label for="shopsInput">Instruction</label>
+              <label for="shopsInput">Shop</label>
               <select class="form-control" id="shopsInput">
                 <option value="default">Choose Shop</option>
               </select>
@@ -308,7 +308,7 @@
             <div class="form-group">
               <!-- <label for="shopsInputEdit">Shops</label>
               <input type="text" class="form-control" id="shopsInputEdit"> -->
-              <label for="shopsInputEdit">Instruction</label>
+              <label for="shopsInputEdit">Shop</label>
               <select class="form-control" id="shopsInputEdit">
                 <option value="default">Choose Shop</option>
               </select>
@@ -1292,6 +1292,48 @@
       let tdPosition = $('#classTd' + i).position()
       let tdScroll = $('#classTd' + i).scrollTop()
       let tooltipHeight = $('#classTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+
+    function hideManufacturerTooltip(i) {
+      let tooltip = document.getElementById('manufacturerTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function showManufacturerTooltip(i) {
+      let tooltip = document.getElementById('manufacturerTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#manufacturerTd' + i).position()
+      let tdScroll = $('#manufacturerTd' + i).scrollTop()
+      let tooltipHeight = $('#manufacturerTooltip' + i).height()
+      tooltipHeight += 24
+      let windowHeight = $(window).height()
+      let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
+      if (windowHeight < effectiveHeight) {
+        tooltip.classList.remove('sideEffectTooltip')
+        tooltip.classList.add('sideEffectTooltipTop')
+        tooltip.style.top = "-" + tooltipHeight + "px"
+      }
+    }
+
+    function hideShopTooltip(i) {
+      let tooltip = document.getElementById('shopTooltip' + i)
+      tooltip.style.display = "none"
+    }
+
+    function showShopTooltip(i) {
+      let tooltip = document.getElementById('shopTooltip' + i)
+      tooltip.style.display = "block"
+      let tdPosition = $('#shopTd' + i).position()
+      let tdScroll = $('#shopTd' + i).scrollTop()
+      let tooltipHeight = $('#shopTooltip' + i).height()
       tooltipHeight += 24
       let windowHeight = $(window).height()
       let effectiveHeight = tdPosition.top + tdScroll + tooltipHeight
