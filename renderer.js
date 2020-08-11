@@ -504,7 +504,7 @@ $('#cases_container').on('click', '.openCaseButton', function (e) {
 
     $('#caseDateValue').html(d);
     $('#caseAgeValue').html(selectedCase.age);
-    $('#caseGenderValue').html(selectedCase.gender.toUpperCase());
+    $('#caseGenderValue').html(selectedCase.gender && selectedCase.gender.toUpperCase());
     $('#caseBPValue').html(selectedCase.bloodPressure);
     $('#casePulseValue').html(selectedCase.pulse);
     $('#caseTempValue').html(selectedCase.temperature);
