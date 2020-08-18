@@ -424,6 +424,10 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
     let cases = JSON.parse(fs.readFileSync(p, 'utf-8'))
     let caseToBeEdited = cases[caseId]
 
+    let chiefComplain = caseToBeEdited.chiefComplain.length === 1 && caseToBeEdited.chiefComplain[0] === ""? [] : caseToBeEdited.chiefComplain
+    let advice = caseToBeEdited.advice.length === 1 && caseToBeEdited.advice[0] === ""? [] : caseToBeEdited.advice
+    let test = caseToBeEdited.test.length === 1 && caseToBeEdited.test[0] === ""? [] : caseToBeEdited.test
+
     $('#caseNameInputEdit').val(caseToBeEdited.case);
     $('#dateInputEdit').val(caseToBeEdited.date);
     $('#ageInputEdit').val(caseToBeEdited.age);
@@ -433,11 +437,11 @@ $('#cases_container').on('click', '.editCaseButton', function (e) {
     $('#temperatureInputEdit').val(caseToBeEdited.temperature);
     $('#spo2InputEdit').val(caseToBeEdited.spo2);
     $('#weightInputEdit').val(caseToBeEdited.weight);
-    $('#chiefComplainInputEdit').val(caseToBeEdited.chiefComplain);
+    $('#chiefComplainInputEdit').val(chiefComplain);
     $('#historyInputEdit').val(caseToBeEdited.history);
     $('#medicationInputEdit').val(caseToBeEdited.medication);
-    $('#testCaseInputEdit').val(caseToBeEdited.test);
-    $('#adviceInputEdit').val(caseToBeEdited.advice);
+    $('#testCaseInputEdit').val(test);
+    $('#adviceInputEdit').val(advice);
     $('#reviewInputEdit').val(caseToBeEdited.review);
     $('#noteInputEdit').val(caseToBeEdited.note);
     $('#caseIdInputEdit').val(caseId);
@@ -553,11 +557,11 @@ $('#save-case-btn').click(function () {
         "temperature": temperature,
         "spo2": spo2,
         "weight": weight,
-        "chiefComplain": chiefComplain,
+        "chiefComplain": chiefComplain || null,
         "history": history,
         "medication": medication,
-        "test": test,
-        "advice": advice,
+        "test": test || null,
+        "advice": advice  || null,
         "review": review,
         "note": note
     }
@@ -607,7 +611,7 @@ $('#update-case-btn').click(function () {
         "temperature": temperature,
         "spo2": spo2,
         "weight": weight,
-        "chiefComplain": chiefComplain,
+        "chiefComplain": chiefComplain || "default",
         "history": history,
         "medication": medication,
         "test": test,
