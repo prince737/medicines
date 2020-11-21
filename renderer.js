@@ -41,6 +41,7 @@ function readData(initial=false) {
     var dirPath = path.join(docsPath, '/medicines');
     var med = path.join(docsPath, '/medicines/medicines.json');
     var casesFile = path.join(docsPath, '/medicines/cases.json');
+    var patientsFile = path.join(docsPath, '/medicines/patients.json');
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath);
         fs.writeFileSync(med, '{}', {
@@ -69,6 +70,14 @@ function readData(initial=false) {
         })
     }
 
+    //PAtients file does not exists
+    if (!fs.existsSync(patientsFile)) {
+        fs.writeFileSync(patientsFile, '{}', {
+            encoding: "utf8",
+            flag: "w+",
+        })
+    }
+
     let cases = JSON.parse(fs.readFileSync(casesFile, 'utf-8'))
     let tableRow = [], i = 0
     $('#cases-table').DataTable().clear();
@@ -89,6 +98,41 @@ function readData(initial=false) {
         $('#cases-table').DataTable().row.add(tableRow);
     }
     $('#cases-table').DataTable().draw(false);
+
+
+    let patients = JSON.parse(fs.readFileSync(patientsFile, 'utf-8'))
+    tableRow = [], i = 0
+    $('#patients-table').DataTable().clear();
+    for (let patient in patients) {
+        tableRow = []
+        tableRow.push(++i)
+        for (let key in patients[patient]){
+            if(key == "time" && patients[patient][key]){
+                let timeArr = patients[patient][key].split(':')
+                let initTime = parseInt(timeArr[0])
+                if(initTime > 12){
+                    initTime -= 12
+                    initTime = `${initTime}`.padStart(2,0)
+                    patients[patient][key] = `${initTime}:${timeArr[1]} PM`
+                }else{
+                    initTime = `${initTime}`.padStart(2,0)
+                    patients[patient][key] = `${initTime}:${timeArr[1]} AM`
+                }
+            }
+            tableRow.push(patients[patient][key])
+        }
+        tableRow.push(`<div class='dropdown'>
+            <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButtonPatient' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+            Action
+            </button>
+            <div class='dropdown-menu dropdown-menu-right' aria-labelledby='dropdownMenuButton'>
+            <a class='dropdown-item editPatientButton' id='${patient + "-editButton"}' href='#'>Edit</a>
+            <a class='dropdown-item deletePatientButton' id='${patient + "-deleteButton"}' href='#'>Delete</a>
+            </div>
+        </div>`)
+        $('#patients-table').DataTable().row.add(tableRow);
+    }
+    $('#patients-table').DataTable().draw(false);
 
 
     let medicines = JSON.parse(fs.readFileSync(med, 'utf-8'))
@@ -633,6 +677,94 @@ $('#update-case-btn').click(function () {
     $('#casesEditModal :input').val('');
 })
 
+/*******************************************************************/
+/*********                 PATIENTS ELEMENTS              **********/
+/*******************************************************************/
+
+$('#patients_container').on('click', '.editPatientButton', function (e) {
+    let patientId = e.target.id.split('-')[0]
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    let patientToBeEdited = patients[patientId]
+
+    $('#patUPIDInputEdit').val(patientToBeEdited.UPID);
+    $('#patDateInputEdit').val(patientToBeEdited.date);
+    $('#patTimeInputEdit').val(patientToBeEdited.time);
+    $('#patCaseInputEdit').val(patientToBeEdited.case);
+    $('#patNameInputEdit').val(patientToBeEdited.name);
+    $('#patAgeAndGenderInputEdit').val(patientToBeEdited.ageAndGender);
+    $('#patPlaceInputEdit').val(patientToBeEdited.place);
+    $('#patMobileInputEdit').val(patientToBeEdited.mobile);
+    $('#patCfSelectEdit').val(patientToBeEdited.cf);
+    $('#patientIdInputEdit').val(patientId);
+    $('#patientsEditModal').modal('show')
+})
+
+$('#update-patient-btn').click(function () {
+    var upid = $('#patUPIDInputEdit').val();
+    var date = $('#patDateInputEdit').val();
+    var time = $('#patTimeInputEdit').val();
+    var name = $('#patNameInputEdit').val();
+    var _case = $('#patCaseInputEdit').val();
+    var ageAndGender = $('#patAgeAndGenderInputEdit').val();
+    var place = $('#patPlaceInputEdit').val();
+    var mobile = $('#patMobileInputEdit').val();
+    var cf = $('#patCfSelectEdit').val();
+    var patientToBeEdited = $('#patientIdInputEdit').val();
+
+    //save goes here
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    patients[patientToBeEdited] = {
+        "UPID": upid,
+        "date": date,
+        "time": time,
+        "case": _case,
+        "name": name,
+        "ageAndGender": ageAndGender,
+        "place": place,
+        "mobile": mobile,
+        "cf": cf
+    }
+
+    fs.writeFileSync(p, JSON.stringify(patients))
+    readData()
+    const options = {
+        type: 'info',
+        title: 'Success',
+        message: 'Success!',
+        detail: "Patient was successfully saved."
+    };
+    dialog.showMessageBox(null, options);
+    $('#patientsEditModal :input').val('');
+    $('#patCfSelectEdit').val('Choose CF');
+})
+
+
+$('#patients_container').on('click', '.deletePatientButton', function (e) {
+    let patientId = e.target.id.split('-')[0]
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    let patientToBeDeleted = patients[patientId]
+
+    const options = {
+        type: 'question',
+        buttons: ["Delete", "Cancel"],
+        title: 'Success',
+        message: 'Sure to delete patient having UPID ' + patientToBeDeleted.UPID + '?',
+        detail: "Once deleted, this action cannot be undone."
+    };
+    dialog.showMessageBox(null, options)
+        .then((s) => {
+            if (s.response === 0) {
+                delete patients[patientId]
+                $('#toastText').html('Patient having UPID <strong>' + patientToBeDeleted.UPID + '</strong>' + ' was successfully deleted.')
+                fs.writeFileSync(p, JSON.stringify(patients))
+                readData()
+                $('#deleteToast').toast('show')
+            }
+        })
+})
 
 /*******************************************************************/
 /*********                 DROPDOWN ELEMENTS              **********/
@@ -728,6 +860,17 @@ $('#addAdviceBtn').click(function () {
         fileKey: "advice",
         formInputId: "adviceInput",
         isMultiSelect: true
+    })
+})
+
+$('#addCFBtn').click(function () {
+    addDropDownItem({
+        name: "CF",
+        inputId: "addCF",
+        fileName: "cf.json",
+        fileKey: "cf",
+        formInputId: "patCfSelect",
+        isMultiSelect: false
     })
 })
 
@@ -862,6 +1005,20 @@ $('#editAdviceBtn').click(function () {
     })
 })
 
+$('#editCFBtn').click(function () {
+    editDropDownItem({
+        name: "CF",
+        inputId: "editCFSelect",
+        newInputId: "editCFDD",
+        fileName: "cf.json",
+        fileKey: "cf",
+        type: "patients",
+        dataKey: "cf",
+        formInputId: "patCfSelect",
+        isMultiSelect: false
+    })
+})
+
 // $('#editReviewBtn').click(function () {
 //     editDropDownItem({
 //         name: "review",
@@ -877,6 +1034,12 @@ $('#editAdviceBtn').click(function () {
 // })
 
 function readManageDropdownData() {
+    //CF MANAGE
+    let cf = readDataFromFile({ fileName: 'cf.json', defaultData: '{"cf":["a","b"]}' })
+    refreshDropdownData(cf, 'editCFSelect', 'cf')
+    refreshDropdownData(cf, 'patCfSelectEdit', 'cf')
+    refreshDropdownData(cf, 'patCfSelect', 'cf')
+
     //TYPES MANAGE
     let types = readDataFromFile({ fileName: 'types.json', defaultData: '{"types":[]}' })
     refreshDropdownData(types, 'editTypeSelect', 'types')

@@ -57,6 +57,18 @@
           </svg>
           Cases
         </li>
+        <li id="patients_nav">
+          <svg focusable="false" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="14" height="2" x="16" y="20"></rect>
+            <rect width="14" height="2" x="16" y="24"></rect>
+            <rect width="7" height="2" x="16" y="28"></rect>
+            <path
+              d="M14,26H4V6h7.17l3.42,3.41.58.59H28v8h2V10a2,2,0,0,0-2-2H16L12.59,4.59A2,2,0,0,0,11.17,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H14Z">
+            </path>
+            <title>Folder details</title>
+          </svg>
+          Patients
+        </li>
       </ul>
       <div class="divider">
         MANAGE
@@ -390,6 +402,183 @@
     </div>
 
 
+    <div class="modal fade" id="addPatientsModal" tabindex="-1">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add patient</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              &times; 
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-10">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">DMSC</span>
+                  </div>
+                  <input type="text" class="form-control" id="patUPIDInput" placeholder="UPID">
+                </div>
+              </div> 
+              <div class="col-md-2">
+                <button type="button" id="searchUPIDBtn" class="btn btn-secondary">Search</button>
+              </div>  
+            </div>
+            <div class="form-group" style="margin-top:1rem">
+              <label for="patDateInput">Date</label>
+              <input type="date" class="form-control" id="patDateInput">
+            </div>
+            <div class="form-group">
+              <label for="patTimeInput">Time</label>
+              <input type="time" class="form-control" id="patTimeInput">
+            </div>
+            <div class="form-group">
+              <label for="patPlaceInput">Place</label>
+              <input type="text" class="form-control" id="patPlaceInput">
+            </div>
+            <div class="form-group">
+              <label for="patCfSelect">CF</label>
+              <select class="form-control" id="patCfSelect">
+                <option value="default">Choose CF</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="patCaseInput">Case</label>
+              <input type="text" class="form-control" id="patCaseInput">
+            </div>
+            <div class="form-group">
+              <label for="patNameInput">Name</label>
+              <input type="text" class="form-control" id="patNameInput">
+            </div>
+            <div class="form-group" style="margin-top:1rem">
+              <label for="patDOBInput">DOB</label>
+              <input type="date" class="form-control" id="patDOBInput">
+            </div>
+            <div class="form-group">
+              <label for="patAgeAndGenderInput">Age & Gender</label>
+              <input type="text" class="form-control" id="patAgeAndGenderInput">
+            </div>
+            <div class="form-group">
+              <label for="patAddressInput">Address</label>
+              <textarea class="form-control" id="patAddressInput"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="patMobileInput">Mobile</label>
+              <input type="text" class="form-control" id="patMobileInput">
+            </div>
+          </div>
+          <input type="hidden" id="patientIdInputEdit">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="save-patient-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="patientsEditModal" tabindex="-1">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit patient</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              &times; 
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="patUPIDInputEdit">UPID</label>
+              <input type="text" readonly class="form-control" id="patUPIDInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patDateInputEdit">Date</label>
+              <input type="date" class="form-control" id="patDateInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patTimeInputEdit">Time</label>
+              <input type="time" class="form-control" id="patTimeInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patPlaceInputEdit">Place</label>
+              <input type="text" class="form-control" id="patPlaceInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patCfSelectEdit">CF</label>
+              <select class="form-control" id="patCfSelectEdit">
+                <option value="default">Choose CF</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="patCaseInputEdit">Case</label>
+              <input type="text" class="form-control" id="patCaseInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patNameInputEdit">Name</label>
+              <input type="text" class="form-control" id="patNameInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patAgeAndGenderInputEdit">Age & Gender</label>
+              <input type="text" class="form-control" id="patAgeAndGenderInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patMobileInputEdit">Mobile</label>
+              <input type="text" class="form-control" id="patMobileInputEdit">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="update-patient-btn" data-dismiss="modal" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="patients_container">
+      <div class="col-lg-12">
+        <header>
+          <button class="nav-toggle btn btn-sm btn-warning">
+            MENU <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 24H28V26H4zM4 12H28V14H4zM4 18H28V20H4zM4 6H28V8H4z"></path><title>Menu</title></svg>
+          </button>
+          <h2 id="doc_title">Patients</h2>
+          <button type="button" class="add-button btn btn-sm btn-success" data-toggle="modal"
+            data-target="#addPatientsModal">Add new <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg" fill="#fff" width="12" height="12" viewBox="0 0 32 32"
+              aria-hidden="true" style="will-change: transform;">
+              <path
+                d="M16,2C8.4,2,2,8.4,2,16s6.4,14,14,14s14-6.4,14-14S23.6,2,16,2z M24,17h-7v7h-2v-7H8v-2h7V8h2v7h7V17z">
+              </path>
+              <path fill="none" d="M24 17L17 17 17 24 15 24 15 17 8 17 8 15 15 15 15 8 17 8 17 15 24 15z"
+                data-icon-path="inner-path"></path>
+              <title>Add filled</title>
+            </svg></button>
+          <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+        </header>
+        <div class="tableWrapper">
+          <table id="patients-table" aria-describedby="test"
+            class="mdl-data-table table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th id="pat_slno">Sl. No.</th>
+                <th id="pat_upid">UPID</th>
+                <th id="pat_date">Date</th>
+                <th id="pat_time">Time</th>
+                <th id="pat_Case">Case</th>
+                <th id="pat_name">Name</th>
+                <th id="pat_ageAndGender">Age & Gender</th>
+                <th id="pat_place">Place</th>
+                <th id="pat_mobile">Mobile</th>
+                <th id="pat_type">CF</th>
+                <th id="pat_actions">Actions</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
     <div class="row" id="dd_manage">
       <div class="col-lg-12">
         <header>
@@ -496,6 +685,19 @@
                   <input type="text" class="form-control" id="addAdvice">
                   <button class="btn btn-primary dd-add-btn" id="addAdviceBtn">
                     Add Advice
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+                <hr style="margin: 2rem 0">
+                <h5 style="margin-bottom: 2rem">Patient Dropdown Elements</h5>
+
+                <label for="addCF">CF name</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addCF">
+                  <button class="btn btn-primary dd-add-btn" id="addCFBtn">
+                    Add CF
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                     </svg>
                   </button>
@@ -725,6 +927,31 @@
                 <div class="col-lg-2 editButtonContainer">
                   <button id="editAdviceBtn" class="btn btn-primary manage-add-btn">
                     Edit advice
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div> 
+
+
+              <h4 style="margin: 1rem 0;">Patients elements</h4>
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editCFSelect">CF</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editCFSelect">
+                      <option value="default">Choose CF</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editCFDD">New CF name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editCFDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editCFBtn" class="btn btn-primary manage-add-btn">
+                    Edit CF
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
                   </button>
                 </div>
@@ -1150,6 +1377,7 @@
       $(".sidebar-overlay").hide()
       $('#cases_container').hide()
       $('#medicines_container').hide();
+      $('#patients_container').hide();
       $('#dd_edit').hide();
     })
 
@@ -1165,6 +1393,7 @@
       $(".sidebar-overlay").hide()
       $('#cases_container').hide()
       $('#medicines_container').hide();
+      $('#patients_container').hide();
       $('#dd_manage').hide()
       $('#dd_edit').show();
     })
@@ -1181,6 +1410,7 @@
       $('#dd_manage').hide()
       $('#cases_container').hide()
       $('#medicines_container').show();
+      $('#patients_container').hide();
       $('#dd_edit').hide();
     })
 
@@ -1196,6 +1426,23 @@
       $('#dd_manage').hide()
       $('#cases_container').show()
       $('#medicines_container').hide();
+      $('#patients_container').hide();
+      $('#dd_edit').hide();
+    })
+
+    $('#patients_nav').click(function () {
+      $('input:text').val('');
+      $('select:not(.custom-select)').val('default');
+      $(document).attr("title", "Patients");
+      $('#doc_title').html('Patients')
+
+      $(".sidebar").css('left', "-22rem")
+      $(".sidebar-overlay").hide()
+
+      $('#dd_manage').hide()
+      $('#cases_container').hide()
+      $('#medicines_container').hide();
+      $('#patients_container').show();
       $('#dd_edit').hide();
     })
 

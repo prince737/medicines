@@ -13,6 +13,10 @@ body{
 }
 
 #medicines_container{
+    display: none;
+}
+
+#patients_container{
     display: block;
 }
 
