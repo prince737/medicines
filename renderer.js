@@ -706,6 +706,60 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     $('#patientsEditModal').modal('show')
 })
 
+$('#save-patient-btn').click(function () {
+    var upid = $('#patUPIDInput').val();
+    var date = $('#patDateInput').val();
+    var time = $('#patTimeInput').val();
+    var name = $('#patNameInput').val();
+    var _case = $('#patCaseInput').val();
+    var ageAndGender = $('#patAgeAndGenderInput').val();
+    var address = $('#patAddressInput').val();
+    var mobile = $('#patMobileInput').val();
+    var cf = $('#patCfSelect').val();
+    var dob = $('#patDOBInput').val();
+
+
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    patients[Date.now()] = {
+        "UPID": upid,
+        "date": date,
+        "time": time,
+        "case": _case,
+        "name": name,
+        "ageAndGender": ageAndGender,
+        "address": address,
+        "mobile": mobile,
+        "cf": cf,
+        "dob": dob
+    }
+    console.log({
+        "UPID": upid,
+        "date": date,
+        "time": time,
+        "case": _case,
+        "name": name,
+        "ageAndGender": ageAndGender,
+        "address": address,
+        "mobile": mobile,
+        "cf": cf,
+        "dob": dob
+    })
+    console.log(patients)
+
+    fs.writeFileSync(p, JSON.stringify(patients))
+    readData()
+    const options = {
+        type: 'info',
+        title: 'Success',
+        message: 'Success!',
+        detail: "Patient details was successfully saved."
+    };
+    dialog.showMessageBox(null, options);
+    $('#addPatientsModal :input').val('');
+    $('#patCfSelect').val('Choose CF');
+})
+
 $('#update-patient-btn').click(function () {
     var upid = $('#patUPIDInputEdit').val();
     var date = $('#patDateInputEdit').val();
@@ -716,7 +770,6 @@ $('#update-patient-btn').click(function () {
     var address = $('#patAddressInputEdit').val();
     var mobile = $('#patMobileInputEdit').val();
     var cf = $('#patCfSelectEdit').val();
-    var cf = $('#patDobInputEdit').val();
     var patientToBeEdited = $('#patientIdInputEdit').val();
 
     //save goes here
@@ -1490,8 +1543,10 @@ $('#searchUPIDBtn').click(function(){
 
 $('#generateUPIDBtn').click(function(){
     var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var month = (dateObj.getUTCMonth() + 1); //months from 1-12
+    month = month.toString().padStart(2, '0')
     var day = dateObj.getUTCDate();
+    day = day.toString().padStart(2, '0')
     var year = dateObj.getUTCFullYear();
     year = year.toString().substr(2)
     let maxUPID = parseInt(localStorage.getItem("maxUPID"))
