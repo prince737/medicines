@@ -91,6 +91,10 @@
           <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M22,22v6H6V4H16V2H6A2,2,0,0,0,4,4V28a2,2,0,0,0,2,2H22a2,2,0,0,0,2-2V22Z"></path><path d="M29.54,5.76l-3.3-3.3a1.6,1.6,0,0,0-2.24,0l-14,14V22h5.53l14-14a1.6,1.6,0,0,0,0-2.24ZM14.7,20H12V17.3l9.44-9.45,2.71,2.71ZM25.56,9.15,22.85,6.44l2.27-2.27,2.71,2.71Z"></path><title>Request quote</title></svg>
           Edit Dropdown Elements
         </li>
+        <li id="upid_nav">
+          <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 22a4 4 0 10-4-4A4 4 0 0016 22zm0-6a2 2 0 11-2 2A2 2 0 0116 16zM14 6H18V8H14z"></path><path d="M24,2H8A2.002,2.002,0,0,0,6,4V28a2.0023,2.0023,0,0,0,2,2H24a2.0027,2.0027,0,0,0,2-2V4A2.0023,2.0023,0,0,0,24,2ZM20,28H12V26a1,1,0,0,1,1-1h6a1,1,0,0,1,1,1Zm2,0V26a3,3,0,0,0-3-3H13a3,3,0,0,0-3,3v2H8V4H24V28Z"></path><title>UPID</title></svg>
+          UPID
+        </li>
       </ul>
     </div>
 
@@ -413,7 +417,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">DMSC</span>
@@ -421,9 +425,8 @@
                   <input type="text" class="form-control" id="patUPIDInput" placeholder="UPID">
                 </div>
               </div> 
-              <div class="col-md-2">
                 <button type="button" id="searchUPIDBtn" class="btn btn-secondary">Search</button>
-              </div>  
+                <button type="button" id="generateUPIDBtn" class="btn btn-info">Generate UPID</button>
             </div>
             <div class="form-group" style="margin-top:1rem">
               <label for="patDateInput">Date</label>
@@ -432,10 +435,6 @@
             <div class="form-group">
               <label for="patTimeInput">Time</label>
               <input type="time" class="form-control" id="patTimeInput">
-            </div>
-            <div class="form-group">
-              <label for="patPlaceInput">Place</label>
-              <input type="text" class="form-control" id="patPlaceInput">
             </div>
             <div class="form-group">
               <label for="patCfSelect">CF</label>
@@ -501,8 +500,8 @@
               <input type="time" class="form-control" id="patTimeInputEdit">
             </div>
             <div class="form-group">
-              <label for="patPlaceInputEdit">Place</label>
-              <input type="text" class="form-control" id="patPlaceInputEdit">
+              <label for="patAddressInputEdit">Address</label>
+              <input type="text" class="form-control" id="patAddressInputEdit">
             </div>
             <div class="form-group">
               <label for="patCfSelectEdit">CF</label>
@@ -567,7 +566,7 @@
                 <th id="pat_Case">Case</th>
                 <th id="pat_name">Name</th>
                 <th id="pat_ageAndGender">Age & Gender</th>
-                <th id="pat_place">Place</th>
+                <th id="pat_address">Address</th>
                 <th id="pat_mobile">Mobile</th>
                 <th id="pat_type">CF</th>
                 <th id="pat_actions">Actions</th>
@@ -1312,6 +1311,84 @@
       </div>
     </div>
 
+    <div class="row" id="upid_container">
+      <div class="col-lg-12">
+        <header>
+          <button class="nav-toggle btn btn-sm btn-warning">
+            MENU <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 24H28V26H4zM4 12H28V14H4zM4 18H28V20H4zM4 6H28V8H4z"></path><title>Menu</title></svg>
+          </button>
+          <h2 id="doc_title">Manage UPIDs</h2>
+          <p class="signature">An Initiative By: <br> <span>Dr. Debpritam Saha</span></p>
+        </header>
+        <div class="upid_body_container shadow bg-white">
+          <div class="upid_form_container">
+              <form id="upid_form">
+                <label for="search_UPID">Enter UPID</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"></path><title>Search</title></svg></span>
+                    <span class="input-group-text">DMSC</span>
+                  </div>
+                  <input type="text" class="form-control" id="search_UPID">
+                </div>
+                <small id="emailHelp" class="form-text text-muted">Hit "Enter" to begin search.</small>
+              </form>
+
+              <div class="patient_details_container">
+                <h5>Patient Details</h5>
+                <hr>
+                <form id="patient_record_form">
+                    <div class="form_group" class="upidLabel">
+                      <label for="upidNameEdit">NAME</label>
+                      <input class="upidInput" type="text" id="upidNameEdit">
+                    </div>
+                    <div class="form_group">
+                      <label for="upidDobEdit" class="upidLabel">DOB</label>
+                      <input class="upidInput" type="date" id="upidDobEdit">
+                    </div>
+                    <div class="form_group">
+                      <label for="upidAgeEdit" class="upidLabel">AGE</label>
+                      <input class="upidInput" type="text" id="upidAgeEdit">
+                    </div>
+                    <div class="form_group">
+                      <label class="upidLabel">GENDER</label>
+                      <div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" id="upidGenderMale" type="radio" name="upidGenderEdit" value="M">
+                          <label class="form-check-label" for="upidGenderMale">MALE</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" id="upidGenderFemale" type="radio" name="upidGenderEdit" value="F">
+                          <label class="form-check-label" for="upidGenderFemale">FEMALE</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" id="upidGenderOther" type="radio" name="upidGenderEdit" value="O">
+                          <label class="form-check-label" for="upidGenderOther">OTHER</label>
+                        </div>
+                      </div>
+                      
+                      <!-- <input class="upidInput" type="text" id="upidGenderEdit"> -->
+                    </div>
+                    <div class="form_group">
+                      <label for="upidAddressEdit" class="upidLabel">ADDRESS</label>
+                      <input class="upidInput" type="text" id="upidAddressEdit">
+                    </div>
+                    <div class="form_group">
+                      <label for="upidMobileEdit" class="upidLabel">MOBILE NO.</label>
+                      <input class="upidInput" type="text" id="upidMobileEdit">
+                    </div>
+                    <input type="hidden" id="upidEdit" />
+                    <div class="align-right">
+                      <button type="submit" class="btn btn-primary upidSubmitBtn" id="upidSaveRecord">Save record</button>
+
+                    </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 
 
@@ -1379,6 +1456,7 @@
       $('#medicines_container').hide();
       $('#patients_container').hide();
       $('#dd_edit').hide();
+      $('#upid_container').hide();
     })
 
     $('#dd_elems_edit_nav').click(function () {
@@ -1396,6 +1474,7 @@
       $('#patients_container').hide();
       $('#dd_manage').hide()
       $('#dd_edit').show();
+      $('#upid_container').hide();
     })
 
     $('#medicines_nav').click(function () {
@@ -1412,6 +1491,7 @@
       $('#medicines_container').show();
       $('#patients_container').hide();
       $('#dd_edit').hide();
+      $('#upid_container').hide();
     })
 
     $('#cases_nav').click(function () {
@@ -1428,6 +1508,7 @@
       $('#medicines_container').hide();
       $('#patients_container').hide();
       $('#dd_edit').hide();
+      $('#upid_container').hide();
     })
 
     $('#patients_nav').click(function () {
@@ -1444,6 +1525,24 @@
       $('#medicines_container').hide();
       $('#patients_container').show();
       $('#dd_edit').hide();
+      $('#upid_container').hide();
+    })
+
+    $('#upid_nav').click(function () {
+      $('input:text').val('');
+      $('select:not(.custom-select)').val('default');
+      $(document).attr("title", "Patients");
+      $('#doc_title').html('Patients')
+
+      $(".sidebar").css('left', "-22rem")
+      $(".sidebar-overlay").hide()
+
+      $('#dd_manage').hide()
+      $('#cases_container').hide()
+      $('#medicines_container').hide();
+      $('#patients_container').hide();
+      $('#dd_edit').hide();
+      $('#upid_container').show();
     })
 
     function showSETooltip(i) {

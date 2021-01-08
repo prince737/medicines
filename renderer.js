@@ -103,10 +103,16 @@ function readData(initial=false) {
     let patients = JSON.parse(fs.readFileSync(patientsFile, 'utf-8'))
     tableRow = [], i = 0
     $('#patients-table').DataTable().clear();
+    let maxUPID = 0
     for (let patient in patients) {
         tableRow = []
         tableRow.push(++i)
         for (let key in patients[patient]){
+            if(key === "dob") continue
+            if(key === 'UPID'){
+                let count = patients[patient][key].substr(6)
+                if(count > maxUPID) maxUPID = count
+            }
             if(key == "time" && patients[patient][key]){
                 let timeArr = patients[patient][key].split(':')
                 let initTime = parseInt(timeArr[0])
@@ -133,7 +139,7 @@ function readData(initial=false) {
         $('#patients-table').DataTable().row.add(tableRow);
     }
     $('#patients-table').DataTable().draw(false);
-
+    localStorage.setItem('maxUPID', maxUPID)
 
     let medicines = JSON.parse(fs.readFileSync(med, 'utf-8'))
 
@@ -693,7 +699,7 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     $('#patCaseInputEdit').val(patientToBeEdited.case);
     $('#patNameInputEdit').val(patientToBeEdited.name);
     $('#patAgeAndGenderInputEdit').val(patientToBeEdited.ageAndGender);
-    $('#patPlaceInputEdit').val(patientToBeEdited.place);
+    $('#patAddressInputEdit').val(patientToBeEdited.address);
     $('#patMobileInputEdit').val(patientToBeEdited.mobile);
     $('#patCfSelectEdit').val(patientToBeEdited.cf);
     $('#patientIdInputEdit').val(patientId);
@@ -707,9 +713,10 @@ $('#update-patient-btn').click(function () {
     var name = $('#patNameInputEdit').val();
     var _case = $('#patCaseInputEdit').val();
     var ageAndGender = $('#patAgeAndGenderInputEdit').val();
-    var place = $('#patPlaceInputEdit').val();
+    var address = $('#patAddressInputEdit').val();
     var mobile = $('#patMobileInputEdit').val();
     var cf = $('#patCfSelectEdit').val();
+    var cf = $('#patDobInputEdit').val();
     var patientToBeEdited = $('#patientIdInputEdit').val();
 
     //save goes here
@@ -722,9 +729,10 @@ $('#update-patient-btn').click(function () {
         "case": _case,
         "name": name,
         "ageAndGender": ageAndGender,
-        "place": place,
+        "address": address,
         "mobile": mobile,
-        "cf": cf
+        "cf": cf,
+        "dob": patients[patientToBeEdited].dob
     }
 
     fs.writeFileSync(p, JSON.stringify(patients))
@@ -1419,4 +1427,123 @@ $('#addAdviceFromEditModal').click(function () {
         }
     })
     .catch(console.error);
+})
+
+
+/*******************************************************************/
+/*********                       UPID                     **********/
+/*******************************************************************/
+
+function searchPatient(upid, requireId=false){
+    if(!upid) return
+
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    let patientFound 
+
+    for(let patient in patients){
+        if(patients[patient].UPID === upid){
+            patientFound = patients[patient]
+            if(requireId){
+                return {id:patient, data:patientFound}
+            }
+            return patientFound
+        }
+    }
+}
+
+$('#upid_form').submit(function(e){
+    e.preventDefault();
+
+    let searchString = $('#search_UPID').val();
+    console.log(searchString)
+    let patientFound = searchPatient(searchString)
+
+    if(!patientFound){
+        let title = "Invalid UPID"
+        let content = `No patient found with UPID "${searchString}"`
+        dialog.showErrorBox(title, content)
+        return
+    }
+
+    $('#upidNameEdit').val(patientFound.name);
+    $('#upidDobEdit').val(patientFound.dob);
+    $('#upidAgeEdit').val(patientFound.ageAndGender && patientFound.ageAndGender.split('/')[1]);
+    $('input:radio[name=upidGenderEdit]').val([patientFound.ageAndGender && patientFound.ageAndGender.split('/')[0]]);
+    $('#upidAddressEdit').val(patientFound.address);
+    $('#upidMobileEdit').val(patientFound.mobile);
+    $('#upidEdit').val(searchString)
+})
+
+
+$('#searchUPIDBtn').click(function(){
+    let searchString = $('#patUPIDInput').val();
+    let patientFound = searchPatient(searchString)
+    $('#patNameInput').val(patientFound.name);
+    $('#patAgeAndGenderInput').val(patientFound.ageAndGender);
+    $('#patAddressInput').val(patientFound.address);
+    $('#patMobileInput').val(patientFound.mobile);
+    $('#patMobileInput').val(patientFound.mobile);
+    $('#patDOBInput').val(patientFound.dob);
+    
+})
+
+$('#generateUPIDBtn').click(function(){
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    year = year.toString().substr(2)
+    let maxUPID = parseInt(localStorage.getItem("maxUPID"))
+    let maxId = maxUPID+1
+    maxId = maxId.toString()
+    let newUPID = year+month+day+maxId.padStart(6, '0')
+
+    $('#patUPIDInput').val(newUPID)
+})
+
+$('#upidSaveRecord').click(function(e){
+    e.preventDefault()
+
+    let upid = $('#upidEdit').val()
+    let patientFound = searchPatient(upid, true)
+    let patId = patientFound.id
+    patientFound = patientFound.data
+
+    let name = $('#upidNameEdit').val();
+    let dob = $('#upidDobEdit').val();
+    let age = $('#upidAgeEdit').val();
+    let gender = $('input:radio[name=upidGenderEdit]:checked').val();
+    let address =$('#upidAddressEdit').val();
+    let mobile = $('#upidMobileEdit').val();
+
+    if(patientFound){
+        var p = path.join(docsPath, '/medicines/patients.json');
+        let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+        patients[patId] = {
+            "UPID": patientFound.UPID,
+            "date": patientFound.date,
+            "time": patientFound.time,
+            "case": patientFound.case,
+            "name": name,
+            "ageAndGender": `${gender}/${age}`,
+            "address": address,
+            "mobile": mobile,
+            "cf": patientFound.cf,
+            "dob": dob
+        }
+
+        fs.writeFileSync(p, JSON.stringify(patients))
+        readData()
+        const options = {
+            type: 'info',
+            title: 'Success',
+            message: 'Success!',
+            detail: "Patient details was successfully updated."
+        };
+        dialog.showMessageBox(null, options);
+        $('#patient_record_form :input[type="text"]').val('');
+        $('#patient_record_form :input[type="date"]').val('');
+        $('#patient_record_form input[type="radio"]').prop('checked', false); 
+    }
 })

@@ -8,6 +8,10 @@ body{
     font-size: 12px;
 }
 
+#upid_container{
+    display: none;
+}
+
 #dd_manage{
     display: none;
 }
@@ -379,4 +383,64 @@ header h2{
     right: 2rem;
     min-width: 18rem;
     z-index: 9999;
+}
+
+.upid_body_container{
+    width: 40%;
+    margin: 0 auto;
+    background: rgb(230, 230, 230);
+    padding: 2.5rem;
+}
+
+.form_group{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: .75rem 0;
+}
+
+.patient_details_container{
+    margin-top: 1.5rem;
+}
+
+.upidInput{
+    height: 2.5rem;
+    outline: none;
+    border: 1px solid #ced4da;
+    transition: all .2s ease;
+    padding-left: .75rem;
+}
+
+.upidInput:focus{
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+#patient_record_form{
+    margin-top: 1.5rem;
+}
+
+.upidSubmitBtn{
+    margin-right: auto;
+}
+
+.align-right {
+    text-align: right;
+    margin-top:1rem;
+  }
+
+#patientNotFound{
+    display:none;
+    margin-top:1rem;
+}
+
+#generateUPIDBtn{
+    margin-left: 1rem;
+    width:10rem;
+}
+
+.form_group label{
+    align-self: end;
 }
