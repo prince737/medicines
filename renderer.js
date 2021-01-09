@@ -70,7 +70,7 @@ function readData(initial=false) {
         })
     }
 
-    //PAtients file does not exists
+    //Patients file does not exists
     if (!fs.existsSync(patientsFile)) {
         fs.writeFileSync(patientsFile, '{}', {
             encoding: "utf8",
@@ -188,6 +188,9 @@ function readData(initial=false) {
         $('#testCaseInputEdit').multiSelect();
         $('#adviceInputEdit').multiSelect();
         // $('#reviewInputEdit').multiSelect();
+        // $("#initial-loader").animate({top: "-100vh"}, {
+            // duration: 700, delay: 10000});
+        // $('#initial-loader').css('display', 'none')
     }
 }
 
@@ -1096,7 +1099,7 @@ $('#editCFBtn').click(function () {
 
 function readManageDropdownData() {
     //CF MANAGE
-    let cf = readDataFromFile({ fileName: 'cf.json', defaultData: '{"cf":["a","b"]}' })
+    let cf = readDataFromFile({ fileName: 'cf.json', defaultData: '{"cf":[]}' })
     refreshDropdownData(cf, 'editCFSelect', 'cf')
     refreshDropdownData(cf, 'patCfSelectEdit', 'cf')
     refreshDropdownData(cf, 'patCfSelect', 'cf')
@@ -1509,7 +1512,6 @@ $('#upid_form').submit(function(e){
     e.preventDefault();
 
     let searchString = $('#search_UPID').val();
-    console.log(searchString)
     let patientFound = searchPatient(searchString)
 
     if(!patientFound){
@@ -1526,6 +1528,8 @@ $('#upid_form').submit(function(e){
     $('#upidAddressEdit').val(patientFound.address);
     $('#upidMobileEdit').val(patientFound.mobile);
     $('#upidEdit').val(searchString)
+
+    $('.patient_details_container').css('display', 'block')
 })
 
 
@@ -1537,8 +1541,7 @@ $('#searchUPIDBtn').click(function(){
     $('#patAddressInput').val(patientFound.address);
     $('#patMobileInput').val(patientFound.mobile);
     $('#patMobileInput').val(patientFound.mobile);
-    $('#patDOBInput').val(patientFound.dob);
-    
+    $('#patDOBInput').val(patientFound.dob);    
 })
 
 $('#generateUPIDBtn').click(function(){
@@ -1599,6 +1602,7 @@ $('#upidSaveRecord').click(function(e){
         dialog.showMessageBox(null, options);
         $('#patient_record_form :input[type="text"]').val('');
         $('#patient_record_form :input[type="date"]').val('');
-        $('#patient_record_form input[type="radio"]').prop('checked', false); 
+        $('#patient_record_form input[type="radio"]').prop('checked', false);
+        $('.patient_details_container').css('display', 'none') 
     }
 })

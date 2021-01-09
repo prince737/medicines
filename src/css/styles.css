@@ -17,11 +17,11 @@ body{
 }
 
 #medicines_container{
-    display: none;
+    display: block;
 }
 
 #patients_container{
-    display: block;
+    display: none;
 }
 
 #cases_container{
@@ -399,6 +399,7 @@ header h2{
 }
 
 .patient_details_container{
+    display:none;
     margin-top: 1.5rem;
 }
 
@@ -444,3 +445,66 @@ header h2{
 .form_group label{
     align-self: end;
 }
+
+
+
+/* LOADER STYLES */
+
+.spinner-container{
+    flex-direction: column-reverse;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    background: #2980b9;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-container p{
+    font-size: 1.5rem;
+    margin: .5rem 0;
+    color:  rgb(250, 250, 250);
+}
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    position: relative;
+  }
+  
+  .double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgb(252, 252, 252);
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+  }
+  
+  .double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+  
+  @-webkit-keyframes sk-bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+  }
+  
+  @keyframes sk-bounce {
+    0%, 100% { 
+      transform: scale(0.0);
+      -webkit-transform: scale(0.0);
+    } 50% { 
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+  }
