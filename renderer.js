@@ -39,6 +39,7 @@ let table = $('#medicine-table').DataTable({
 
 function readData(initial=false) {
     var dirPath = path.join(docsPath, '/medicines');
+    var dirPathPrescriptions = path.join(docsPath, '/medicines/Prescriptions');
     var med = path.join(docsPath, '/medicines/medicines.json');
     var casesFile = path.join(docsPath, '/medicines/cases.json');
     var patientsFile = path.join(docsPath, '/medicines/patients.json');
@@ -52,6 +53,11 @@ function readData(initial=false) {
             encoding: "utf8",
             flag: "w+",
         })
+    }
+
+    //Prescriptions dir does not exists
+    if (!fs.existsSync(dirPathPrescriptions)){
+        fs.mkdirSync(dirPathPrescriptions);
     }
 
     //Medicines file does not exists
@@ -108,7 +114,6 @@ function readData(initial=false) {
         tableRow = []
         tableRow.push(++i)
         for (let key in patients[patient]){
-            if(key === "dob") continue
             if(key === 'UPID'){
                 let count = patients[patient][key].substr(6)
                 if(count > maxUPID) maxUPID = count
@@ -698,13 +703,14 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
 
     $('#patUPIDInputEdit').val(patientToBeEdited.UPID);
     $('#patDateInputEdit').val(patientToBeEdited.date);
+    $('#patDOBInputEdit').val(patientToBeEdited.dob);
     $('#patTimeInputEdit').val(patientToBeEdited.time);
     $('#patCaseInputEdit').val(patientToBeEdited.case);
     $('#patNameInputEdit').val(patientToBeEdited.name);
     $('#patAgeAndGenderInputEdit').val(patientToBeEdited.ageAndGender);
     $('#patAddressInputEdit').val(patientToBeEdited.address);
     $('#patMobileInputEdit').val(patientToBeEdited.mobile);
-    $('#patCfSelectEdit').val(patientToBeEdited.cf);
+    $('#patCfSelectEdit').val(patientToBeEdited.cf || "Choose CF");
     $('#patientIdInputEdit').val(patientId);
     $('#patientsEditModal').modal('show')
 })
@@ -720,7 +726,65 @@ $('#save-patient-btn').click(function () {
     var mobile = $('#patMobileInput').val();
     var cf = $('#patCfSelect').val();
     var dob = $('#patDOBInput').val();
+    let tests = $('#patTestsInput').prop('files');
+    let prescription = $('#patPrescriptionInput').prop('files');
 
+    
+
+    let dirPathPrescriptionsDate, dirPathWithUpid
+    if(tests.length || prescription.length){
+        dirPathPrescriptionsDate = path.join(docsPath, `/medicines/Prescriptions/${new Date().toISOString().slice(0, 10)
+        }`);
+        if (!fs.existsSync(dirPathPrescriptionsDate)){
+            fs.mkdirSync(dirPathPrescriptionsDate);
+        }
+        dirPathWithUpid = path.join(dirPathPrescriptionsDate, `/${upid}-${name}`)
+        if (!fs.existsSync(dirPathWithUpid)){
+            fs.mkdirSync(dirPathWithUpid);
+        }
+    }
+
+    let UploadError = false, uploadCount = 0
+
+    if(tests.length){
+        for (let test of tests){
+            let originalPath = test.path;
+            let ext = test.name.split('.')
+            ext = ext[ext.length -1]
+            let tname = test.name.substr(0, test.name.indexOf('.')); 
+            let source = fs.createReadStream(originalPath);
+            let dest = fs.createWriteStream(`${dirPathWithUpid}/Test-[${upid} ${name} ${date}].${ext}`);
+            source.pipe(dest);
+            source.on('end', function() {uploadCount++ });
+            source.on('error', function(err) { 
+                UploadError = true
+                console.log(err)
+                dialog.showErrorBox("Error", "Failed to upload the file '"+name+"'. "+uploadCount+" file/s uploaded so far. Patient's record was not saved, please try again.") });
+        }
+        uploadCount=0
+    }
+
+    if(prescription.length){
+        for (let p of prescription){
+            let originalPath = p.path;
+            let ext = p.name.split('.')
+            ext = ext[ext.length -1]
+            let pname = p.name.substr(0, p.name.indexOf('.')); 
+            let source = fs.createReadStream(originalPath);
+            let dest = fs.createWriteStream(`${dirPathWithUpid}/Prescription-[${upid} ${name} ${date}].${ext}`);
+            source.pipe(dest);
+            source.on('end', function() {
+                uploadCount=0
+            });
+            source.on('error', function(err) { 
+                UploadError = true
+                console.log(err)
+                dialog.showErrorBox("Error", "Failed to upload the file '"+name+"'. "+uploadCount+" file/s uploaded so far. Patient's record was not saved, please try again.")
+            });
+        }
+    }
+
+    if(UploadError) return
 
     var p = path.join(docsPath, '/medicines/patients.json');
     let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
@@ -728,27 +792,14 @@ $('#save-patient-btn').click(function () {
         "UPID": upid,
         "date": date,
         "time": time,
-        "case": _case,
         "name": name,
+        "dob": dob,
+        "case": _case,
         "ageAndGender": ageAndGender,
         "address": address,
         "mobile": mobile,
-        "cf": cf,
-        "dob": dob
+        "cf": cf
     }
-    console.log({
-        "UPID": upid,
-        "date": date,
-        "time": time,
-        "case": _case,
-        "name": name,
-        "ageAndGender": ageAndGender,
-        "address": address,
-        "mobile": mobile,
-        "cf": cf,
-        "dob": dob
-    })
-    console.log(patients)
 
     fs.writeFileSync(p, JSON.stringify(patients))
     readData()
@@ -766,6 +817,7 @@ $('#save-patient-btn').click(function () {
 $('#update-patient-btn').click(function () {
     var upid = $('#patUPIDInputEdit').val();
     var date = $('#patDateInputEdit').val();
+    var dob = $('#patDOBInputEdit').val();
     var time = $('#patTimeInputEdit').val();
     var name = $('#patNameInputEdit').val();
     var _case = $('#patCaseInputEdit').val();
@@ -782,13 +834,13 @@ $('#update-patient-btn').click(function () {
         "UPID": upid,
         "date": date,
         "time": time,
-        "case": _case,
         "name": name,
+        "dob": dob,
+        "case": _case,
         "ageAndGender": ageAndGender,
         "address": address,
         "mobile": mobile,
-        "cf": cf,
-        "dob": patients[patientToBeEdited].dob
+        "cf": cf
     }
 
     fs.writeFileSync(p, JSON.stringify(patients))
