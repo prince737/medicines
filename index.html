@@ -460,8 +460,24 @@
               <input type="text" class="form-control" id="patCaseInput">
             </div>
             <div class="form-group">
-              <label for="patAgeAndGenderInput">Age & Gender</label>
+              <label for="patAgeAndGenderInput">Age</label>
               <input type="text" class="form-control" id="patAgeAndGenderInput">
+            </div>
+            <div class="form-group">
+              <label for="patGenderInput">Gender</label>
+              <br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderMale" type="radio" name="patGenderInput" value="M">
+                <label class="form-check-label" for="patGenderMale">MALE</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderFemale" type="radio" name="patGenderInput" value="F">
+                <label class="form-check-label" for="patGenderFemale">FEMALE</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderOther" type="radio" name="patGenderInput" value="O">
+                <label class="form-check-label" for="patGenderOther">OTHER</label>
+              </div>
             </div>
             <div class="form-group">
               <label for="patAddressInput">Address</label>
@@ -540,6 +556,22 @@
             <div class="form-group">
               <label for="patAgeAndGenderInputEdit">Age & Gender</label>
               <input type="text" class="form-control" id="patAgeAndGenderInputEdit">
+            </div>
+            <div class="form-group">
+              <label for="patGenderInput">Gender</label>
+              <br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderMaleEdit" type="radio" name="patGenderInputEdit" value="M">
+                <label class="form-check-label" for="patGenderMaleEdit">MALE</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderFemaleEdit" type="radio" name="patGenderInputEdit" value="F">
+                <label class="form-check-label" for="patGenderFemaleEdit">FEMALE</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="patGenderOtherEdit" type="radio" name="patGenderInputEdit" value="O">
+                <label class="form-check-label" for="patGenderOtherEdit">OTHER</label>
+              </div>
             </div>
             <div class="form-group">
               <label for="patAddressInputEdit">Address</label>
@@ -1486,6 +1518,7 @@
     }
 
     $(document).ready(function () {
+      document.getElementById('patDateInput').valueAsDate = new Date();
       fillAgeDropdown()
       let csv_btn = document.getElementsByClassName('buttons-csv')
       csv_btn[0].classList.add('btn')
@@ -1717,15 +1750,14 @@
     function calcAge() {
       let dateString = $('#patDOBInput').val()
       var birthday = +new Date(dateString);
-      $("#patAgeAndGenderInput").val('/'+parseInt(~~((Date.now() - birthday) / (31557600000))+1))
+      $("#patAgeAndGenderInput").val(parseInt(~~((Date.now() - birthday) / (31557600000))+1))
     }
 
     function calcAgeEdit() {
-      let ageAndGender = $("#patAgeAndGenderInputEdit").val()
-      let gender = ageAndGender && ageAndGender.includes("/")?ageAndGender.split('/')[0]:""
       let dateString = $('#patDOBInputEdit').val()
       var birthday = +new Date(dateString);
-      $("#patAgeAndGenderInputEdit").val(gender+'/'+parseInt(~~((Date.now() - birthday) / (31557600000))+1))
+      var fromDate = +new Date($('#patDateInputEdit').val()) || Date.now()
+      $("#patAgeAndGenderInputEdit").val(parseInt(~~((Date.now() - birthday) / (31557600000))+1))
     }
 
     function hideManufacturerTooltip(i) {

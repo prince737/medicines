@@ -113,10 +113,11 @@ function readData(initial=false) {
     for (let patient in patients) {
         tableRow = []
         tableRow.push(++i)
+        let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         let d = new Date(patients[patient]['dob'])
-        patients[patient]['dob'] = d.toLocaleDateString('en-IN')
+        patients[patient]['dob'] = d.toLocaleDateString('en-IN',options)
         d = new Date(patients[patient]['date'])
-        patients[patient]['date'] = d.toLocaleDateString('en-IN')
+        patients[patient]['date'] = d.toLocaleDateString('en-IN',options)
         let chamber = patients[patient]['chamber']
         delete patients[patient]['chamber']
         for (let key in patients[patient]){
@@ -707,7 +708,6 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     var p = path.join(docsPath, '/medicines/patients.json');
     let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
     let patientToBeEdited = patients[patientId]
-
     $('#patUPIDInputEdit').val(patientToBeEdited.UPID);
     $('#patChamberSelectEdit').val(patientToBeEdited.chamber);
     $('#patDateInputEdit').val(patientToBeEdited.date);
@@ -715,7 +715,8 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     $('#patTimeInputEdit').val(patientToBeEdited.time);
     $('#patCaseInputEdit').val(patientToBeEdited.case);
     $('#patNameInputEdit').val(patientToBeEdited.name);
-    $('#patAgeAndGenderInputEdit').val(patientToBeEdited.ageAndGender);
+    $('#patAgeAndGenderInputEdit').val(patientToBeEdited.ageAndGender.split('/')[0]);
+    $('input:radio[name=patGenderInputEdit]').val([patientToBeEdited.ageAndGender && patientToBeEdited.ageAndGender.split('/')[1]]);
     $('#patAddressInputEdit').val(patientToBeEdited.address);
     $('#patMobileInputEdit').val(patientToBeEdited.mobile);
     $('#patCfSelectEdit').val(patientToBeEdited.cf || "Choose CF");
@@ -730,7 +731,8 @@ $('#save-patient-btn').click(function (e) {
     var time = $('#patTimeInput').val();
     var name = $('#patNameInput').val();
     var _case = $('#patCaseInput').val();
-    var ageAndGender = $('#patAgeAndGenderInput').val();
+    var age = $('#patAgeAndGenderInput').val();
+    let gender = $('input:radio[name=patGenderInput]:checked').val();
     var address = $('#patAddressInput').val();
     var mobile = $('#patMobileInput').val();
     var cf = $('#patCfSelect').val();
@@ -808,7 +810,7 @@ $('#save-patient-btn').click(function (e) {
         "name": name,
         "dob": dob,
         "case": _case,
-        "ageAndGender": ageAndGender,
+        "ageAndGender": age+'/'+gender,
         "address": address,
         "mobile": mobile,
         "cf": cf,
@@ -836,7 +838,8 @@ $('#update-patient-btn').click(function () {
     var time = $('#patTimeInputEdit').val();
     var name = $('#patNameInputEdit').val();
     var _case = $('#patCaseInputEdit').val();
-    var ageAndGender = $('#patAgeAndGenderInputEdit').val();
+    var age = $('#patAgeAndGenderInputEdit').val();
+    let gender = $('input:radio[name=patGenderInputEdit]:checked').val();
     var address = $('#patAddressInputEdit').val();
     var mobile = $('#patMobileInputEdit').val();
     var cf = $('#patCfSelectEdit').val();
@@ -852,7 +855,7 @@ $('#update-patient-btn').click(function () {
         "name": name,
         "dob": dob,
         "case": _case,
-        "ageAndGender": ageAndGender,
+        "ageAndGender": age+'/'+gender,
         "address": address,
         "mobile": mobile,
         "cf": cf,
@@ -1592,33 +1595,46 @@ $('#addAdviceFromEditModal').click(function () {
 /*********                       UPID                     **********/
 /*******************************************************************/
 
-function searchPatient(upid, requireId=false){
-    if(!upid) return
+function searchPatient(upid ,chamber, requireId=false, sendAllMatches=false){
+    if(!upid || !chamber) return
 
     var p = path.join(docsPath, '/medicines/patients.json');
     let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
-    let patientFound 
-
+    let patientFound, patientsFound = [] 
+    
     for(let patient in patients){
-        if(patients[patient].UPID === upid){
-            patientFound = patients[patient]
-            if(requireId){
-                return {id:patient, data:patientFound}
+        if(patients[patient].UPID === upid && patients[patient].chamber===chamber ){
+            if(sendAllMatches){
+                patientFound = patients[patient]
+                patientsFound.push({id:patient, data:patientFound})
+            }else{
+                patientFound = patients[patient]
+                if(requireId){
+                    return {id:patient, data:patientFound}
+                }
+                return patientFound
             }
-            return patientFound
         }
     }
+    if(sendAllMatches=false) return patientsFound
 }
 
 $('#upid_form').submit(function(e){
     e.preventDefault();
 
+    let chamber = $('#upidChamberSelect').val();
+    if(!chamber){
+        let title = "Invalid or empty Chamber"
+        let content = `Please select a valid chamber from the list first.`
+        dialog.showErrorBox(title, content)
+        return
+    }
     let searchString = $('#search_UPID').val();
-    let patientFound = searchPatient(searchString)
+    let patientFound = searchPatient(searchString, chamber)
 
     if(!patientFound){
         let title = "Invalid UPID"
-        let content = `No patient found with UPID "${searchString}"`
+        let content = `No patient found from chamber ${chamber} and with UPID "${searchString}".`
         dialog.showErrorBox(title, content)
         return
     }
@@ -1626,7 +1642,7 @@ $('#upid_form').submit(function(e){
     $('#upidNameEdit').val(patientFound.name);
     $('#upidDobEdit').val(patientFound.dob);
     $('#upidAgeEdit').val(patientFound.ageAndGender && patientFound.ageAndGender.split('/')[1]);
-    $('input:radio[name=upidGenderEdit]').val([patientFound.ageAndGender && patientFound.ageAndGender.split('/')[0]]);
+    $('input:radio[name=upidGenderEdit]').val([patientFound.ageAndGender && patientFound.ageAndGender.split('/')[1]]);
     $('#upidAddressEdit').val(patientFound.address);
     $('#upidMobileEdit').val(patientFound.mobile);
     $('#upidEdit').val(searchString)
@@ -1637,9 +1653,11 @@ $('#upid_form').submit(function(e){
 
 $('#searchUPIDBtn').click(function(){
     let searchString = $('#patUPIDInput').val();
-    let patientFound = searchPatient(searchString)
+    let chamber = $('#patChamberSelect').val();
+    let patientFound = searchPatient(searchString, chamber)
     $('#patNameInput').val(patientFound.name);
-    $('#patAgeAndGenderInput').val(patientFound.ageAndGender);
+    $('#patAgeAndGenderInput').val(patientFound.ageAndGender.split('/')[0]);
+    $('input:radio[name=patGenderInput]').val([patientFound.ageAndGender && patientFound.ageAndGender.split('/')[1]]);
     $('#patAddressInput').val(patientFound.address);
     $('#patMobileInput').val(patientFound.mobile);
     $('#patMobileInput').val(patientFound.mobile);
@@ -1669,39 +1687,47 @@ $('#generateUPIDBtn').click(function(){
 
 $('#upidSaveRecord').click(function(e){
     e.preventDefault()
-
+    var p = path.join(docsPath, '/medicines/patients.json');
+    let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    let chamber = $('#patChamberSelect').val()
+    let patUpdated = false
     let upid = $('#upidEdit').val()
-    let patientFound = searchPatient(upid, true)
-    let patId = patientFound.id
-    patientFound = patientFound.data
-
-    let name = $('#upidNameEdit').val();
-    let dob = $('#upidDobEdit').val();
-    // let age = $('#upidAgeEdit').val();
-    let gender = $('input:radio[name=upidGenderEdit]:checked').val();
-    let address =$('#upidAddressEdit').val();
-    let mobile = $('#upidMobileEdit').val();
-
-    var birthday = +new Date(dob);
-    let age = (~~((Date.now() - birthday) / (31557600000))+1)
-
-    if(patientFound){
-        var p = path.join(docsPath, '/medicines/patients.json');
-        let patients = JSON.parse(fs.readFileSync(p, 'utf-8'))
-        patients[patId] = {
-            "UPID": patientFound.UPID,
-            "date": patientFound.date,
-            "time": patientFound.time,
-            "case": patientFound.case,
-            "name": name,
-            "ageAndGender": `${gender}/${age}`,
-            "address": address,
-            "mobile": mobile,
-            "cf": patientFound.cf,
-            "dob": dob,
-            "chamber": ""
+    let patientsFound = searchPatient(upid, chamber, true, true)
+    
+    for(let patientFound of patientsFound){
+        let patId = patientFound.id
+        patientFound = patientFound.data
+    
+        let name = $('#upidNameEdit').val();
+        let dob = $('#upidDobEdit').val();
+        // let age = $('#upidAgeEdit').val();
+        let gender = $('input:radio[name=upidGenderEdit]:checked').val();
+        let address =$('#upidAddressEdit').val();
+        let mobile = $('#upidMobileEdit').val();
+    
+        var birthday = +new Date(dob);
+        var fromDate = +new Date(patientFound.date) || Date.now()
+        let age = (~~((fromDate - birthday) / (31557600000))+1)
+    
+        if(patientFound){
+            patUpdated = true
+            patients[patId] = {
+                "UPID": patientFound.UPID,
+                "date": patientFound.date,
+                "time": patientFound.time,
+                "name": name,
+                "case": patientFound.case,
+                "dob": dob,
+                "ageAndGender": `${gender}/${age}`,
+                "address": address,
+                "mobile": mobile,
+                "cf": patientFound.cf,
+                "chamber": patientFound.chamber
+            } 
         }
-
+    }
+    
+    if(patUpdated){
         fs.writeFileSync(p, JSON.stringify(patients))
         readData()
         const options = {
@@ -1714,6 +1740,6 @@ $('#upidSaveRecord').click(function(e){
         $('#patient_record_form :input[type="text"]').val('');
         $('#patient_record_form :input[type="date"]').val('');
         $('#patient_record_form input[type="radio"]').prop('checked', false);
-        $('.patient_details_container').css('display', 'none') 
+        $('.patient_details_container').css('display', 'none')
     }
 })
