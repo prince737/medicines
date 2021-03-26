@@ -113,10 +113,17 @@ function readData(initial=false) {
     for (let patient in patients) {
         tableRow = []
         tableRow.push(++i)
+        let d = new Date(patients[patient]['dob'])
+        patients[patient]['dob'] = d.toLocaleDateString('en-IN')
+        d = new Date(patients[patient]['date'])
+        patients[patient]['date'] = d.toLocaleDateString('en-IN')
+        let chamber = patients[patient]['chamber']
+        delete patients[patient]['chamber']
         for (let key in patients[patient]){
             if(key === 'UPID'){
-                let count = patients[patient][key].substr(6)
+                let count = patients[patient][key]
                 if(count > maxUPID) maxUPID = count
+                patients[patient][key] = chamber+'.'+patients[patient][key]
             }
             if(key == "time" && patients[patient][key]){
                 let timeArr = patients[patient][key].split(':')
@@ -702,6 +709,7 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     let patientToBeEdited = patients[patientId]
 
     $('#patUPIDInputEdit').val(patientToBeEdited.UPID);
+    $('#patChamberSelectEdit').val(patientToBeEdited.chamber);
     $('#patDateInputEdit').val(patientToBeEdited.date);
     $('#patDOBInputEdit').val(patientToBeEdited.dob);
     $('#patTimeInputEdit').val(patientToBeEdited.time);
@@ -715,7 +723,8 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
     $('#patientsEditModal').modal('show')
 })
 
-$('#save-patient-btn').click(function () {
+$('#save-patient-btn').click(function (e) {
+    var chamber = $('#patChamberInput').val();
     var upid = $('#patUPIDInput').val();
     var date = $('#patDateInput').val();
     var time = $('#patTimeInput').val();
@@ -729,7 +738,11 @@ $('#save-patient-btn').click(function () {
     let tests = $('#patTestsInput').prop('files');
     let prescription = $('#patPrescriptionInput').prop('files');
 
-    
+    if(!upid){
+        dialog.showErrorBox("Error", "UPID is required.")
+        e.stopPropagation();
+        return
+    }
 
     let dirPathPrescriptionsDate, dirPathWithUpid
     if(tests.length || prescription.length){
@@ -798,7 +811,8 @@ $('#save-patient-btn').click(function () {
         "ageAndGender": ageAndGender,
         "address": address,
         "mobile": mobile,
-        "cf": cf
+        "cf": cf,
+        "chamber": chamber
     }
 
     fs.writeFileSync(p, JSON.stringify(patients))
@@ -815,6 +829,7 @@ $('#save-patient-btn').click(function () {
 })
 
 $('#update-patient-btn').click(function () {
+    var chamber = $('#patChamberSelectEdit').val();
     var upid = $('#patUPIDInputEdit').val();
     var date = $('#patDateInputEdit').val();
     var dob = $('#patDOBInputEdit').val();
@@ -840,7 +855,8 @@ $('#update-patient-btn').click(function () {
         "ageAndGender": ageAndGender,
         "address": address,
         "mobile": mobile,
-        "cf": cf
+        "cf": cf,
+        "chamber": chamber
     }
 
     fs.writeFileSync(p, JSON.stringify(patients))
@@ -990,6 +1006,17 @@ $('#addCFBtn').click(function () {
     })
 })
 
+$('#addChamberBtn').click(function () {
+    addDropDownItem({
+        name: "Chamber",
+        inputId: "addChamber",
+        fileName: "chambers.json",
+        fileKey: "chambers",
+        formInputId: "patChamberSelect",
+        isMultiSelect: false
+    })
+})
+
 // $('#addReviewBtn').click(function () {
 //     addDropDownItem({
 //         name: "Review",
@@ -1135,6 +1162,20 @@ $('#editCFBtn').click(function () {
     })
 })
 
+$('#editChamberBtn').click(function () {
+    editDropDownItem({
+        name: "Chamber",
+        inputId: "editChamberSelect",
+        newInputId: "editChamberDD",
+        fileName: "chambers.json",
+        fileKey: "chambers",
+        type: "patients",
+        dataKey: "chamber",
+        formInputId: "patChamberSelect",
+        isMultiSelect: false
+    })
+})
+
 // $('#editReviewBtn').click(function () {
 //     editDropDownItem({
 //         name: "review",
@@ -1155,6 +1196,13 @@ function readManageDropdownData() {
     refreshDropdownData(cf, 'editCFSelect', 'cf')
     refreshDropdownData(cf, 'patCfSelectEdit', 'cf')
     refreshDropdownData(cf, 'patCfSelect', 'cf')
+
+     //CHAMBER MANAGE
+     let chambers = readDataFromFile({ fileName: 'chambers.json', defaultData: '{"chambers":[]}' })
+     refreshDropdownData(chambers, 'editChamberSelect', 'chambers')
+     refreshDropdownData(chambers, 'patChamberSelect', 'chambers')
+     refreshDropdownData(chambers, 'patChamberSelectEdit', 'chambers')
+     refreshDropdownData(chambers, "upidChamberSelect", 'chambers')
 
     //TYPES MANAGE
     let types = readDataFromFile({ fileName: 'types.json', defaultData: '{"types":[]}' })
@@ -1279,6 +1327,7 @@ function addDropDownItem(options) {
     refreshDropdownData(data, 'edit' + name + 'Select', fileKey)
     refreshDropdownData(data, formInputId, fileKey, isMultiSelect)
     refreshDropdownData(data, formInputId+"Edit", fileKey, isMultiSelect)
+    refreshDropdownData(data, "upidChamberSelect", fileKey, isMultiSelect)
     
     //Show success message
     $('#' + inputId).val('')
@@ -1330,6 +1379,7 @@ function editDropDownItem(options) {
     refreshDropdownData(data, inputId, fileKey)
     refreshDropdownData(data, formInputId, fileKey, isMultiSelect)
     refreshDropdownData(data, formInputId+"Edit", fileKey, isMultiSelect)
+    refreshDropdownData(data, "upidChamberSelect", fileKey, isMultiSelect)
 
     //Show success message
     $('#' + inputId).val('default')
@@ -1597,17 +1647,22 @@ $('#searchUPIDBtn').click(function(){
 })
 
 $('#generateUPIDBtn').click(function(){
-    var dateObj = new Date();
-    var month = (dateObj.getUTCMonth() + 1); //months from 1-12
-    month = month.toString().padStart(2, '0')
-    var day = dateObj.getUTCDate();
-    day = day.toString().padStart(2, '0')
-    var year = dateObj.getUTCFullYear();
-    year = year.toString().substr(2)
+    // var dateObj = new Date();
+    // var month = (dateObj.getUTCMonth() + 1); //months from 1-12
+    // month = month.toString().padStart(2, '0')
+    // var day = dateObj.getUTCDate();
+    // day = day.toString().padStart(2, '0')
+    // var year = dateObj.getUTCFullYear();
+    // year = year.toString().substr(2)
+    let chamber = $('#patChamberSelect').val()
+    if(!chamber){
+        dialog.showErrorBox("Validation error", "You must choose a chamber before generating UPID.")
+        return;
+    }
     let maxUPID = parseInt(localStorage.getItem("maxUPID"))
     let maxId = maxUPID+1
     maxId = maxId.toString()
-    let newUPID = year+month+day+maxId.padStart(6, '0')
+    let newUPID = maxId.padStart(9, '0')
 
     $('#patUPIDInput').val(newUPID)
 })
@@ -1622,10 +1677,13 @@ $('#upidSaveRecord').click(function(e){
 
     let name = $('#upidNameEdit').val();
     let dob = $('#upidDobEdit').val();
-    let age = $('#upidAgeEdit').val();
+    // let age = $('#upidAgeEdit').val();
     let gender = $('input:radio[name=upidGenderEdit]:checked').val();
     let address =$('#upidAddressEdit').val();
     let mobile = $('#upidMobileEdit').val();
+
+    var birthday = +new Date(dob);
+    let age = (~~((Date.now() - birthday) / (31557600000))+1)
 
     if(patientFound){
         var p = path.join(docsPath, '/medicines/patients.json');
@@ -1640,7 +1698,8 @@ $('#upidSaveRecord').click(function(e){
             "address": address,
             "mobile": mobile,
             "cf": patientFound.cf,
-            "dob": dob
+            "dob": dob,
+            "chamber": ""
         }
 
         fs.writeFileSync(p, JSON.stringify(patients))

@@ -428,8 +428,11 @@
               <div class="col-md-8">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">DSMC</span>
+                    <select class="custom-select" id="patChamberSelect">
+                      <option value="" selected>Choose chamber</option>
+                    </select>
                   </div>
+                  
                   <input type="text" class="form-control" id="patUPIDInput" placeholder="UPID">
                 </div>
               </div> 
@@ -450,7 +453,7 @@
             </div>
             <div class="form-group" style="margin-top:1rem">
               <label for="patDOBInput">DOB</label>
-              <input type="date" class="form-control" id="patDOBInput">
+              <input type="date" class="form-control" id="patDOBInput" onchange="calcAge()">
             </div>
             <div class="form-group">
               <label for="patCaseInput">Case</label>
@@ -504,8 +507,15 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="patUPIDInputEdit">UPID</label>
-              <input type="text" readonly class="form-control" id="patUPIDInputEdit">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <select class="custom-select" id="patChamberSelectEdit">
+                    <option value="" selected>Choose chamber</option>
+                  </select>
+                </div>
+                
+                <input type="text" class="form-control" id="patUPIDInputEdit" readonly placeholder="UPID">
+              </div>
             </div>
             <div class="form-group">
               <label for="patDateInputEdit">Date</label>
@@ -521,7 +531,7 @@
             </div>
             <div class="form-group">
               <label for="patDOBInputEdit">DOB</label>
-              <input type="date" class="form-control" id="patDOBInputEdit">
+              <input type="date" class="form-control" id="patDOBInputEdit" onchange="calcAgeEdit()">
             </div>
             <div class="form-group">
               <label for="patCaseInputEdit">Case</label>
@@ -718,6 +728,16 @@
                   <input type="text" class="form-control" id="addCF">
                   <button class="btn btn-primary dd-add-btn" id="addCFBtn">
                     Add CF
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
+                    </svg>
+                  </button>
+                </div>
+
+                <label for="addCF">Chamber</label>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="addChamber">
+                  <button class="btn btn-primary dd-add-btn" id="addChamberBtn">
+                    Add Chamber
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 32 32" aria-hidden="true"><path d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14	S23.7,2,16,2z"></path><path d="M24 15L17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"></path><title>Add alt</title></svg>
                     </svg>
                   </button>
@@ -971,6 +991,29 @@
                 </div>  
                 <div class="col-lg-2 editButtonContainer">
                   <button id="editCFBtn" class="btn btn-primary manage-add-btn">
+                    Edit CF
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
+                  </button>
+                </div>
+              </div> 
+
+              <div class="row">
+                <div class="col-lg-5">
+                  <label for="editChamberSelect">Chamber</label>
+                  <div class="form-group">
+                    <select class="form-control" id="editChamberSelect">
+                      <option value="default">Choose Chamber</option>
+                    </select>
+                  </div>
+                </div>  
+                <div class="col-lg-5">
+                  <label for="editChamberDD">New Chamber name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="editChamberDD">
+                  </div>
+                </div>  
+                <div class="col-lg-2 editButtonContainer">
+                  <button id="editChamberBtn" class="btn btn-primary manage-add-btn">
                     Edit CF
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26H30V28H2zM25.4 9c.8-.8.8-2 0-2.8 0 0 0 0 0 0l-3.6-3.6c-.8-.8-2-.8-2.8 0 0 0 0 0 0 0l-15 15V24h6.4L25.4 9zM20.4 4L24 7.6l-3 3L17.4 7 20.4 4zM6 22v-3.6l10-10 3.6 3.6-10 10H6z"></path><title>Edit</title></svg>
                   </button>
@@ -1348,7 +1391,9 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"></path><title>Search</title></svg></span>
-                    <span class="input-group-text">DSMC</span>
+                    <select class="custom-select" id="upidChamberSelect">
+                      <option value="" selected>Choose chamber</option>
+                    </select>
                   </div>
                   <input type="text" class="form-control" id="search_UPID">
                 </div>
@@ -1367,10 +1412,10 @@
                       <label for="upidDobEdit" class="upidLabel">DOB</label>
                       <input class="upidInput" type="date" id="upidDobEdit">
                     </div>
-                    <div class="form_group">
+                    <!-- <div class="form_group">
                       <label for="upidAgeEdit" class="upidLabel">AGE</label>
                       <input class="upidInput" type="text" id="upidAgeEdit">
-                    </div>
+                    </div> -->
                     <div class="form_group">
                       <label class="upidLabel">GENDER</label>
                       <div>
@@ -1667,6 +1712,20 @@
         tooltip.classList.add('sideEffectTooltipTop')
         tooltip.style.top = "-" + tooltipHeight + "px"
       }
+    }
+
+    function calcAge() {
+      let dateString = $('#patDOBInput').val()
+      var birthday = +new Date(dateString);
+      $("#patAgeAndGenderInput").val('/'+parseInt(~~((Date.now() - birthday) / (31557600000))+1))
+    }
+
+    function calcAgeEdit() {
+      let ageAndGender = $("#patAgeAndGenderInputEdit").val()
+      let gender = ageAndGender && ageAndGender.includes("/")?ageAndGender.split('/')[0]:""
+      let dateString = $('#patDOBInputEdit').val()
+      var birthday = +new Date(dateString);
+      $("#patAgeAndGenderInputEdit").val(gender+'/'+parseInt(~~((Date.now() - birthday) / (31557600000))+1))
     }
 
     function hideManufacturerTooltip(i) {

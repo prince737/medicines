@@ -508,3 +508,7 @@ header h2{
       -webkit-transform: scale(1.0);
     }
   }
+
+#upidChamberSelect{
+    border-radius: 0;
+}
