@@ -122,7 +122,7 @@ function readData(initial=false) {
         delete patients[patient]['chamber']
         for (let key in patients[patient]){
             if(key === 'UPID'){
-                let count = patients[patient][key]
+                let count = patients[patient][key].substr(6)
                 if(count > maxUPID) maxUPID = count
                 patients[patient][key] = chamber+'.'+patients[patient][key]
             }
@@ -725,7 +725,7 @@ $('#patients_container').on('click', '.editPatientButton', function (e) {
 })
 
 $('#save-patient-btn').click(function (e) {
-    var chamber = $('#patChamberInput').val();
+    var chamber = $('#patChamberSelect').val();
     var upid = $('#patUPIDInput').val();
     var date = $('#patDateInput').val();
     var time = $('#patTimeInput').val();
@@ -1680,7 +1680,9 @@ $('#generateUPIDBtn').click(function(){
     let maxUPID = parseInt(localStorage.getItem("maxUPID"))
     let maxId = maxUPID+1
     maxId = maxId.toString()
-    let newUPID = maxId.padStart(9, '0')
+    let prepend = "000001"
+    let newUPID = maxId.padStart(5, '0')
+    newUPID = prepend + newUPID
 
     $('#patUPIDInput').val(newUPID)
 })
