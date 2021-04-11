@@ -826,7 +826,10 @@ $('#save-patient-btn').click(function (e) {
         detail: "Patient details was successfully saved."
     };
     dialog.showMessageBox(null, options);
-    $('#addPatientsModal :input').val('');
+    $('#addPatientsModal :input[type="text"]').val('');
+    $('#addPatientsModal #patDOBInput').val('');
+    $('#addPatientsModal #patTimeInput').val('');
+    $('#addPatientsModal input[name=patGenderInput]').prop('checked',false);
     $('#patCfSelect').val('Choose CF');
 })
 
@@ -871,7 +874,10 @@ $('#update-patient-btn').click(function () {
         detail: "Patient was successfully saved."
     };
     dialog.showMessageBox(null, options);
-    $('#patientsEditModal :input').val('');
+    $('#patientsEditModal :input[type="text"]').val('');
+    $('#patientsEditModal .patDOBInputEdit').val('');
+    $('#patientsEditModal .patTimeInputEdit').val('');
+    $('input[name=patGenderInputEdit]').prop('checked',false);
     $('#patCfSelectEdit').val('Choose CF');
 })
 
